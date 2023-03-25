@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { BadRequestError, NotFoundError } from "../errors/index.js";
 import checkAuthorization from "../utils/checkAuthorization.js";
 import mongoose from "mongoose";
+import moment from "moment";
 
 const createJob = async (req, res) => {
   // res.send("Create Job");
@@ -21,11 +22,51 @@ const createJob = async (req, res) => {
 };
 
 const getAllJobs = async (req, res) => {
-  const jobs = await Job.find({ createdBy: req.user.userId });
+  const { status, jobType, sort, search, page } = req.query;
+  let queryLimit = 10;
+  let skipQuery = 0;
+  const pageNum = Number(page) || 1;
 
-  res
-    .status(StatusCodes.OK)
-    .json({ jobs, totalJobs: jobs.length, numOfPage: 1 });
+  const queryObject = {
+    createdBy: req.user.userId,
+  };
+
+  if (status && status !== "all") {
+    queryObject.status = status;
+  }
+
+  if (jobType && jobType !== "all") {
+    queryObject.jobType = jobType;
+  }
+
+  if (search) {
+    queryObject.position = { $regex: search, $options: "i" };
+  }
+  console.log(queryObject);
+  let result = Job.find(queryObject);
+
+  const totalJobs = await Job.countDocuments(queryObject);
+  const numberOfPages = Math.ceil(totalJobs / queryLimit);
+
+  if (sort === "latest") {
+    result = result.sort("-createdAt");
+  }
+  if (sort === "oldest") {
+    result = result.sort("createdAt");
+  }
+  if (sort === "a-z") {
+    result = result.sort("position");
+  }
+  if (sort === "z-a") {
+    result = result.sort("-position");
+  }
+
+  skipQuery = (pageNum - 1) * 10;
+
+  result = result.skip(skipQuery).limit(queryLimit);
+  const jobs = await result;
+
+  res.status(StatusCodes.OK).json({ jobs, totalJobs, numberOfPages });
 };
 
 const showStats = async (req, res) => {
@@ -48,7 +89,17 @@ const showStats = async (req, res) => {
     interview: stats.interview || 0,
     declined: stats.declined || 0,
   };
-  let monthlyApplications = [];
+  let monthlyApplications = await Job.aggregate([
+    { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+    {
+      $group: {
+        _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { "_id.year": -1, "_id.month": -1 } },
+    { $limit: 12 },
+  ]);
   res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
 };
 

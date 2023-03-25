@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import connectDB from "./db/connect.js";
 import authRoutes from "./routes/authRoutes.js";
 import jobRoutes from "./routes/jobRoutes.js";
+import meetingRoutes from "./routes/meetingRoutes.js";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
 import notFoundMiddleware from "./middleware/not-found.js";
 import authenticateUser from "./middleware/auth.js";
@@ -31,16 +32,17 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   // throw new Error("error");
-  res.json({ msg: "Welcome" });
+  res.json({ msg: "API:Home Sweet Home" });
 });
 
 app.get("/api/v1", (req, res) => {
-  throw new Error("error");
-  res.json({ msg: "API Welcome" });
+  // throw new Error("error");
+  res.json({ msg: "WorkPlanner App API Root" });
 });
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/jobs", authenticateUser, jobRoutes);
+app.use("/api/v1/meetings", authenticateUser, meetingRoutes);
 
 //
 app.use(errorHandlerMiddleware);
@@ -58,7 +60,7 @@ const start = async () => {
     await connectDB(url);
     app.listen(port, () => {
       console.log(`Server listening on port ${port}`);
-      console.log(`Current Directory: ${__dirname}`);
+      // console.log(`Current Directory: ${__dirname}`);
     });
   } catch (error) {
     console.log(error);

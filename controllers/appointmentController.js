@@ -53,8 +53,8 @@ const showStats = async (req, res) => {
 };
 
 const deleteMeeting = async (req, res) => {
-  const { id: jobId } = req.params;
-  const meeting = await Meeting.findOne({ _id: jobId });
+  const { id: meetingID } = req.params;
+  const meeting = await Meeting.findOne({ _id: meetingID });
 
   if (!meeting) {
     throw new NotFoundError("No Job Found");
@@ -85,10 +85,14 @@ const updateMeeting = async (req, res) => {
 
   checkAuthorization(req.user, job.createdBy);
 
-  const updatedMeeting = await Job.findOneAndUpdate({ _id: jobID }, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const updatedMeeting = await Meeting.findOneAndUpdate(
+    { _id: meetingID },
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   res.status(StatusCodes.OK).json({ updatedMeeting });
 };

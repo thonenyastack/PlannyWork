@@ -2,6 +2,18 @@ import mongoose from "mongoose";
 
 const MeetingSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: [true, "Please provide Customer Name"],
+      minlength: 5,
+      maxlength: 100,
+    },
+    title: {
+      type: String,
+      required: [true, "Please provide the Title"],
+      minlength: 2,
+      maxlength: 100,
+    },
     position: {
       type: String,
       required: [true, "Please provide Job Title"],
@@ -16,8 +28,13 @@ const MeetingSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["planning", "pending", "accepted"],
+      enum: ["planning", "pending", "accepted", "completed"],
       default: "planning",
+    },
+    meetingCategory: {
+      type: String,
+      enum: ["on-site", "virtual"],
+      default: "on-site",
     },
     jobType: {
       type: String,
@@ -26,7 +43,7 @@ const MeetingSchema = new mongoose.Schema(
     },
     jobLocation: {
       type: String,
-      default: "my-city",
+      default: "Yangon",
       required: true,
     },
     createdBy: {

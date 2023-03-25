@@ -1,2 +1,4 @@
 /node_modules
+/client
+/MOCK_DATA
 .env
