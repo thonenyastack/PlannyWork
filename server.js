@@ -43,7 +43,6 @@ app.get("/api/v1", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/jobs", authenticateUser, jobRoutes);
 app.use("/api/v1/meetings", authenticateUser, meetingRoutes);
-
 //
 app.use(errorHandlerMiddleware);
 app.use(notFoundMiddleware);

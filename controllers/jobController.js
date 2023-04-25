@@ -1,15 +1,15 @@
 import Job from "../model/Job.js";
 import { StatusCodes } from "http-status-codes";
-import { BadRequestError, NotFoundError } from "../errors/index.js";
+import { BadRequestError, NotFoundError } from "../errors/ErrorIndex.js";
 import checkAuthorization from "../utils/checkAuthorization.js";
 import mongoose from "mongoose";
 import moment from "moment";
 
 const createJob = async (req, res) => {
   // res.send("Create Job");
-  const { position, company } = req.body;
+  const { jobName, company } = req.body;
 
-  if (!position || !company) {
+  if (!jobName || !company) {
     const error = BadRequestError("Please provide all fields");
     next(error);
   }
@@ -27,6 +27,7 @@ const getAllJobs = async (req, res) => {
   let skipQuery = 0;
   const pageNum = Number(page) || 1;
 
+  // Todo: Add Role to queryObject
   const queryObject = {
     createdBy: req.user.userId,
   };
@@ -85,9 +86,9 @@ const showStats = async (req, res) => {
   }, {});
 
   const defaultStats = {
-    pending: stats.pending || 0,
-    interview: stats.interview || 0,
-    declined: stats.declined || 0,
+    pending: stats.ongoing || 0,
+    interview: stats.completed || 0,
+    // declined: stats.declined || 0,
   };
   let monthlyApplications = await Job.aggregate([
     { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
