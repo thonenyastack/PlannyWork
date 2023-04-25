@@ -1,4 +1,4 @@
-import { UnAuthenicatedRequest } from "../errors/index.js";
+import { UnAuthenicatedRequest } from "../errors/ErrorIndex.js";
 
 const checkAuthorization = (requestUser, resourceUserId) => {
   if (requestUser.userId === resourceUserId.toString()) return;

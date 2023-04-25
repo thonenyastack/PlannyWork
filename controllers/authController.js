@@ -1,6 +1,9 @@
 import User from "../model/User.js";
 import { StatusCodes } from "http-status-codes";
-import { BadRequestError, UnAuthenicatedRequest } from "../errors/index.js";
+import {
+  BadRequestError,
+  UnAuthenicatedRequest,
+} from "../errors/ErrorIndex.js";
 
 const register = async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -20,6 +23,7 @@ const register = async (req, res, next) => {
         email: user.email,
         lastName: user.lastName,
         location: user.location,
+        role: user.role,
       },
       token,
     });
@@ -50,7 +54,9 @@ const login = async (req, res, next) => {
     if (isPasswordCorrect) {
       const token = user.createJWT();
       user.password = undefined;
-      res.status(StatusCodes.OK).json({ user, token, location: user.location });
+      res
+        .status(StatusCodes.OK)
+        .json({ user, token, location: user.location, role: user.role });
       // if (!user) {
       //   // throw new UnAuthenicatedRequest("Invalid Credential");
       //   const error = new UnAuthenicatedRequest("Invalid Credential");
@@ -58,33 +64,6 @@ const login = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
-  // if (!user) {
-  //   // throw new UnAuthenicatedRequest("Invalid Credential");
-  //   const error = new UnAuthenicatedRequest("Invalid Credential");
-  //   next(error);
-  // }
-
-  // console.log(user);
-  // const isPasswordCorrect = await user.comparePassword(password);
-
-  // if (isPasswordCorrect) {
-  //   const token = user.createJWT();
-  //   user.password = undefined;
-  //   res.status(StatusCodes.OK).json({ user, token, location: user.location });
-  // } else {
-  //   const error = new UnAuthenicatedRequest("Invalid Credentials.");
-  //   next(error);
-  // }
-
-  // if (!isPasswordCorrect) {
-  //   // throw new BadRequestError("Invalid Credentialss");
-  //   const error = new BadRequestError("Plese provide all fie fie fie..");
-  //   next(error);
-  // }
-  // const token = user.createJWT();
-  // user.password = undefined;
-  // res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
 
 const updateUser = async (req, res, next) => {
@@ -105,10 +84,11 @@ const updateUser = async (req, res, next) => {
 
     await user.save();
     // creating a new token for update user info is optional..
-    const token = user.createJWT();
-    res.status(StatusCodes.OK).json({ user, token, location: user.location });
-    console.log(req.user);
-    res.send("Update user");
+    // Have removed new token creation and resending token via res.status
+    // const token = user.createJWT();
+    res.status(StatusCodes.OK).json({ user, location: user.location });
+    // console.log(req.user);
+    // res.send("Update user");
   } catch (error) {
     next(error);
   }
@@ -116,4 +96,19 @@ const updateUser = async (req, res, next) => {
   // res.end();
 };
 
-export { register, login, updateUser };
+const listUsers = async (req, res, next) => {
+  const { role } = req.body;
+  console.log({ UserRole: role });
+  if (!role && !role == "supervisor") {
+    const error = new BadRequestError("Invalid Request");
+    next(error);
+  }
+  try {
+    const users = await User.find({ role: "user" });
+    res.status(StatusCodes.OK).json({ userRole: users });
+    console.log(users);
+  } catch (error) {
+    next(error);
+  }
+};
+export { register, login, updateUser, listUsers };

@@ -2,11 +2,21 @@ import mongoose from "mongoose";
 
 const JobSchema = new mongoose.Schema(
   {
-    position: {
+    jobSheetNo: {
       type: String,
-      required: [true, "Please provide Job Title"],
+      required: [true, "Please provide Jobsheet Number"],
+    },
+    jobName: {
+      type: String,
+      required: [true, "Please provide Jobsheet Title"],
+    },
+    jobDescripton: {
+      type: String,
       minlength: 5,
-      maxlength: 100,
+    },
+    actionTaken: {
+      type: String,
+      minlength: 5,
     },
     company: {
       type: String,
@@ -14,20 +24,32 @@ const JobSchema = new mongoose.Schema(
       minlength: 3,
       maxlength: 100,
     },
-    status: {
+    email: {
       type: String,
-      enum: ["interview", "declined", "pending"],
-      default: "pending",
-    },
-    jobType: {
-      type: String,
-      enum: ["full-time", "part-time", "remote", "internship"],
-      default: "full-time",
     },
     jobLocation: {
       type: String,
-      default: "my-city",
+      default: "Yangon",
       required: true,
+    },
+    jobType: {
+      type: String,
+      enum: ["on-site", "remote", "ad-hoc", "maintenance"],
+      default: "on-site",
+    },
+    status: {
+      type: String,
+      enum: ["completed", "ongoing"],
+      default: "completed",
+    },
+    start: {
+      type: String,
+    },
+    end: {
+      type: String,
+    },
+    duration: {
+      type: String,
     },
     createdBy: {
       type: mongoose.Types.ObjectId,

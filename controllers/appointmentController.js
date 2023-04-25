@@ -1,6 +1,6 @@
 import Meeting from "../model/Appointment.js";
 import { StatusCodes } from "http-status-codes";
-import { BadRequestError, NotFoundError } from "../errors/index.js";
+import { BadRequestError, NotFoundError } from "../errors/ErrorIndex.js";
 import checkAuthorization from "../utils/checkAuthorization.js";
 import mongoose from "mongoose";
 

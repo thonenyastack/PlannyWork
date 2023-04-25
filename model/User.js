@@ -36,7 +36,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     maxlenght: 21,
     trim: true,
-    default: "my city",
+    default: "Yangon",
+  },
+  role: {
+    type: String,
+    default: "user",
+    enum: ["user", "supervisor", "admin"],
   },
 });
 
