@@ -17,3 +17,21 @@ The app allow users to manage jobsheets for Field Service Engineers and Applicat
 The client app is being hosted on AWS at "link"
 
 ## Technologies
+
+- NodeJS
+- ExpressJS
+- JWT
+- MongoDB
+
+## Setup
+
+To run this project locally on your machine.
+
+- For the repo
+
+```
+$ npm install
+
+$ npm start
+
+```
