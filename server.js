@@ -67,23 +67,3 @@ const start = async () => {
 };
 
 start();
-
-//
-
-// mongoose
-//   .connect(
-//     "mongodb+srv://yn:ASDFzxcv1234@worktopianodeexpress.jvdbxjf.mongodb.net/Worktopia?retryWrites=true&w=majority",
-//     {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//     }
-//   )
-//   .then(() =>
-//     app.listen(port, () =>
-//       console.log(`Server up and running on! ${port} ${url}`)
-//     )
-//   );
-
-// mongoose.set("useFindAndModify", false);
-
-// start();
