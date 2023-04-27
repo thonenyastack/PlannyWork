@@ -5,20 +5,26 @@ import checkAuthorization from "../utils/checkAuthorization.js";
 import mongoose from "mongoose";
 import moment from "moment";
 
-const createJob = async (req, res) => {
+const createJob = async (req, res, next) => {
   // res.send("Create Job");
   const { jobName, company } = req.body;
 
   if (!jobName || !company) {
-    const error = BadRequestError("Please provide all fields");
+    const error = new BadRequestError("Please provide all fields");
     next(error);
   }
 
   req.body.createdBy = req.user.userId;
 
-  const job = await Job.create(req.body);
-  console.log(job);
-  res.status(StatusCodes.CREATED).json({ job });
+  try {
+    const job = await Job.create(req.body);
+    // console.log(job);
+    if (job) {
+      res.status(StatusCodes.CREATED).json({ job });
+    }
+  } catch (error) {
+    next(error);
+  }
 };
 
 const getAllJobs = async (req, res) => {

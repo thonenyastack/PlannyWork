@@ -16,10 +16,12 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
 const app = express();
 dotenv.config();
+
+// Monolothic Deployment Approach
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 // process.env.NODE_ENV = "production";
 
@@ -43,11 +45,16 @@ app.get("/api/v1", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/jobs", authenticateUser, jobRoutes);
 app.use("/api/v1/meetings", authenticateUser, meetingRoutes);
+
+// Monolothic Deployment Approach
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
 //
 app.use(errorHandlerMiddleware);
 app.use(notFoundMiddleware);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const url = process.env.dbconnectionString;
 // console.log("test");
 // app.listen(port, () => {
@@ -59,6 +66,7 @@ const start = async () => {
     await connectDB(url);
     app.listen(port, () => {
       console.log(`Server listening on port ${port}`);
+      // console.log(process.env.NODE_ENV.trim());
       // console.log(`Current Directory: ${__dirname}`);
     });
   } catch (error) {
