@@ -1,18 +1,30 @@
 import mongoose from "mongoose";
+import validator from "validator";
 
 const JobSchema = new mongoose.Schema(
   {
     jobSheetNo: {
       type: String,
-      required: [true, "Please provide Jobsheet Number"],
+      // required: [true, "Please provide Jobsheet Number"],
+      validate(value) {
+        if (!validator.isNumeric(value) || validator.isEmpty(value)) {
+          throw Error("Invalid Entry");
+        }
+      },
+      unique: true,
     },
     jobName: {
       type: String,
-      required: [true, "Please provide Jobsheet Title"],
+      validate(value) {
+        if (validator.isNumeric(value) || validator.isEmpty(value)) {
+          throw Error("Invalid Job Title");
+        }
+      },
+      // required: [true, "Please provide Jobsheet Name"],
     },
     jobDescripton: {
       type: String,
-      minlength: 5,
+      minlength: 6,
     },
     actionTaken: {
       type: String,
@@ -20,13 +32,17 @@ const JobSchema = new mongoose.Schema(
     },
     company: {
       type: String,
-      required: [true, "Please provide company name"],
-      minlength: 3,
-      maxlength: 100,
+
+      validate(value) {
+        if (!validator.isLength(value, { min: 3, max: 100 })) {
+          throw Error("No Short Form,Fill in Complete Company Name");
+        }
+      },
+      // required: [true, "Please provide company name"],
+      // minlength: 3,
+      // maxlength: 100,
     },
-    email: {
-      type: String,
-    },
+
     jobLocation: {
       type: String,
       default: "Yangon",
@@ -34,7 +50,7 @@ const JobSchema = new mongoose.Schema(
     },
     jobType: {
       type: String,
-      enum: ["on-site", "remote", "ad-hoc", "maintenance"],
+      enum: ["on-site", "remote", "ad-hoc"],
       default: "on-site",
     },
     status: {

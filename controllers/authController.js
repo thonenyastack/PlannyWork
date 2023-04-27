@@ -11,7 +11,6 @@ const register = async (req, res, next) => {
   if (!name || !email || !password) {
     const error = new BadRequestError("Please provide all the field");
     next(error);
-    // throw new BadRequestError("Please provice all feel...hehe");
   }
 
   try {
@@ -30,15 +29,12 @@ const register = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
-  //
 };
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    // throw new BadRequestError("Please provide all the fields");
     const error = new UnAuthenicatedRequest("Plese provide all fields..");
     next(error);
   }
