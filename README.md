@@ -37,8 +37,9 @@ The client app is being hosted on AWS at "link"
 
 - Prerequisites
   - MongoDB Atlas Account
+    Must have a mongo db account and create a Dabase/Collection for the server. Get the connection string and store it .env file.
   - JWT secret setup
-    Must have a mongo db account and create a Dabase/Collection for the server. Get the connection string and store it .env file. Add JWT secret in the .env file as well.
+    Add JWT secret in the .env file as well.
 
 To run this project locally on your machine.
 
