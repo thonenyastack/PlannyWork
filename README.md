@@ -15,7 +15,13 @@ The app allow users to manage jobsheets for Field Service Engineers and Applicat
 
 ## Demo
 
-The client app is being hosted on AWS at "link"
+The NodeJS app including UI is being hosted on AWS at [link](http://43.207.141.249:5000)
+
+** Login Credentials **
+username/password show as below.
+
+- Demo User: DemoUserA/Test1616
+- Demo Supervisor: DemoSupervisor/Test1616
 
 ## Technologies Backend
 
@@ -23,7 +29,7 @@ The client app is being hosted on AWS at "link"
 - ExpressJS
 - JWT
 - MongoDB
-- AmazonAWS
+- AmazonAWS(EC2)
 
 ## Technologies UI/Frontend
 
@@ -36,9 +42,9 @@ The client app is being hosted on AWS at "link"
 ## Setup
 
 - Prerequisites
-  - MongoDB Atlas Account
+  - MongoDB Atlas Account -
     Must have a mongo db account and create a Dabase/Collection for the server. Get the connection string and store it .env file.
-  - JWT secret setup
+  - JWT secret setup -
     Add JWT secret in the .env file as well.
 
 To run this project locally on your machine.
