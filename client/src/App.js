@@ -35,8 +35,6 @@ function App() {
           <Route index element={<Stats />} />
           <Route path="all-jobs" element={<AllJobs />} />
           <Route path="add-job" element={<AddJob />} />
-          <Route path="all-meetings" element={<AllMeetings />} />
-          <Route path="create-meeting" element={<CreateMeeting />} />
           <Route path="profile" element={<Profile />} />
           <Route path="all-users" element={<AllUsers />} />
         </Route>
