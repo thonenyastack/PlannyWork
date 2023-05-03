@@ -20,9 +20,10 @@ The NodeJS app including UI is being hosted on AWS at [link](http://43.207.141.2
 ** Login Credentials **
 username/password show as below.
 
-````
+```
 - Demo User: demo_user_A@mail.com/abcd1234
 - Demo Supervisor: demo_supervisor@mail.com/test1616
+
 ```
 
 ## Technologies Backend
@@ -61,3 +62,4 @@ $ npm run setup-production
 
 That's it. The application is built and deployed locally. It is available at localhost:5000
 ```
+````
