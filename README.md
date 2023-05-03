@@ -20,8 +20,8 @@ The NodeJS app including UI is being hosted on AWS at [link](http://43.207.141.2
 ** Login Credentials **
 username/password show as below.
 
-- Demo User: DemoUserA/Test1616
-- Demo Supervisor: DemoSupervisor/Test1616
+- Demo User: demo_user_A@mail.com/abcd1234
+- Demo Supervisor: DemoSupervisor/abcd1616
 
 ## Technologies Backend
 
