@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "build": "cd client && npm run build",
+    "build": "cd client && npm install && npm run build",
     "server": "node server --ignore client",
     "client": "npm start --prefix client",
     "start": "node server.js"
