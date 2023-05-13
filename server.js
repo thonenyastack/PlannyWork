@@ -16,6 +16,8 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
 
+mongoose.set("strictQuery", true);
+
 const app = express();
 dotenv.config();
 
