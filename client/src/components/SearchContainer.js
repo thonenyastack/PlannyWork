@@ -51,7 +51,7 @@ const SearchContainer = () => {
             name="search"
             value={localSearch}
             handleChange={cachedSearch}
-          ></FormRow>
+          />
 
           <FormRowSelect
             labelText="status"
