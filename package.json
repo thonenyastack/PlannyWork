@@ -1,16 +1,14 @@
 {
-  "name": "worktopia",
+  "name": "plannywork",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "install": "npm run install-client && npm install",
-    "install-client": "cd client && npm install",
     "build": "cd client && npm run build",
-    "server": "nodemon server --ignore client",
+    "server": "node server --ignore client",
     "client": "npm start --prefix client",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
