@@ -2,3 +2,4 @@
 /client/node_modules
 /MOCK_DATA
 .env
+populatev3.js
