@@ -29,20 +29,10 @@ import {
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
   RESET_FILTER,
-  CREATE_MEETING_BEGIN,
-  CREATE_MEETING_SUCCESS,
-  CREATE_MEETING_ERROR,
-  SET_EDIT_MEETING,
-  EDIT_MEETING_BEGIN,
-  EDIT_MEETING_SUCCESS,
-  EDIT_MEETING_ERROR,
-  GET_MEETING_BEGIN,
-  GET_MEETING_SUCCESS,
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
   GET_USERS_ERROR,
 } from "./actions";
-// import { response } from "express";
 
 const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
@@ -54,7 +44,6 @@ const initialState = {
   alertText: "",
   alertType: "",
   user: user ? JSON.parse(user) : null,
-  role: "",
   token: token,
   jobSheetNo: "",
   jobName: "",
@@ -66,7 +55,6 @@ const initialState = {
   position: "",
   company: "",
   jobTypeOptions: ["remote", "on-site", "ad-hoc"],
-  // jobType: "full-time",
   statusOptions: ["ongoing", "completed"],
   status: "ongoing",
   startOptions: ["9:00", "9:30"],
@@ -86,15 +74,6 @@ const initialState = {
   searchType: "all",
   sort: "latest",
   sortOptions: ["latest", "oldest", "a-z", "z-a"],
-  meetingLocation: location || "Yangon",
-  meetings: [],
-  totalMeetings: 0,
-  weeklyMeetings: [],
-  meetingTypesOptions: ["planning", "pending", "accepted", "completed"],
-  meetingStatusOption: ["sale", "marketing", "site-visit", "maintenance"],
-  meetingCategory: ["on-site", "virtual"],
-  editMeetingId: "",
-  meetingStatus: "planning",
 };
 
 const AppContext = React.createContext();
@@ -311,48 +290,6 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  const createMeeting = async () => {
-    dispatch({ type: CREATE_MEETING_BEGIN });
-    try {
-      const { position, company, meetingLocation, meetingStatus } = state;
-      await authFetch.post("/meetings", {
-        position,
-        company,
-        meetingLocation,
-        meetingStatus,
-      });
-      dispatch({ type: CREATE_MEETING_SUCCESS });
-      dispatch({ type: CLEAR_VALUES });
-    } catch (err) {
-      if (err.response.status === 401) return;
-      dispatch({
-        type: CREATE_MEETING_ERROR,
-        payload: { msg: err.response.data.msg },
-      });
-    }
-    clearAlert();
-  };
-
-  const getMeetings = async () => {
-    let url = "/meetings";
-    dispatch({ type: GET_MEETING_BEGIN });
-    try {
-      const { data } = await authFetch.get(url);
-      const { meetings, totalMeetings, numOfPages } = data;
-      dispatch({
-        type: GET_MEETING_SUCCESS,
-        payload: {
-          meetings,
-          totalMeetings,
-          numOfPages,
-        },
-      });
-    } catch (error) {
-      logoutUser();
-    }
-    clearAlert();
-  };
-
   const getJobs = async () => {
     const { search, searchStatus, searchType, sort } = state;
     let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
@@ -449,8 +386,6 @@ const AppProvider = ({ children }) => {
         deleteJob,
         showStats,
         resetFilters,
-        createMeeting,
-        getMeetings,
         getUsers,
       }}
     >

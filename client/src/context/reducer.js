@@ -24,15 +24,6 @@ import {
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
   RESET_FILTER,
-  CREATE_MEETING_BEGIN,
-  CREATE_MEETING_SUCCESS,
-  CREATE_MEETING_ERROR,
-  EDIT_MEETING_BEGIN,
-  EDIT_MEETING_SUCCESS,
-  EDIT_MEETING_ERROR,
-  SET_EDIT_MEETING,
-  GET_MEETING_BEGIN,
-  GET_MEETING_SUCCESS,
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
 } from "./actions";
@@ -136,18 +127,21 @@ const AppReducer = (state, action) => {
     };
   }
   if (action.type === CLEAR_VALUES) {
-    const initialState = {
-      jobLocation: state.location || "",
+    // const initialState = {
+    //   isEditing: false,
+    //   editJobId: "",
+    //   company: "",
+    //   jobType: "",
+    //   status: "",
+    // };
+    return {
+      ...initialState,
       isEditing: false,
       editJobId: "",
-      position: "",
       company: "",
-      jobType: "full-time",
-      status: "pending",
-    };
-    return {
-      ...state,
-      ...initialState,
+      jobType: "",
+      status: "",
+      // ...state,
     };
   }
 
@@ -200,20 +194,6 @@ const AppReducer = (state, action) => {
     };
   }
 
-  if (action.type === GET_MEETING_BEGIN) {
-    return { ...state, isLoading: true, showAlert: alert };
-  }
-
-  if (action.type === GET_MEETING_SUCCESS) {
-    return {
-      ...state,
-      isLoading: false,
-      meetings: action.payload.meetings,
-      totalMeetings: action.payload.totalMeetings,
-      numOfPages: action.payload.numOfPages,
-    };
-  }
-
   if (action.type === SET_EDIT_JOB) {
     const job = state.jobs.find((job) => job._id === action.payload.id);
     const { _id, position, company, jobLocation, jobType, status } = job;
@@ -243,6 +223,16 @@ const AppReducer = (state, action) => {
     };
   }
 
+  if (action.type === EDIT_JOB_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+
   if (action.type === SHOW_STATS_BEGIN) {
     return { ...state, isLoading: true, showAlert: false };
   }
@@ -255,15 +245,7 @@ const AppReducer = (state, action) => {
       monthlyApplications: action.payload.monthlyApplications,
     };
   }
-  if (action.type === EDIT_JOB_ERROR) {
-    return {
-      ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: "danger",
-      alertText: action.payload.msg,
-    };
-  }
+
   if (action.type === DELETE_JOB_BEGIN) {
     return {
       ...state,

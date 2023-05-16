@@ -30,7 +30,7 @@ const AddJob = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!jobSheetNo || !jobName || !company || !jobLocation) {
+    if (!jobSheetNo || !jobName || !company) {
       displayAlert();
       return;
     }
@@ -40,7 +40,6 @@ const AddJob = () => {
       return;
     }
     createJob();
-    // console.log("job created.");
   };
   const handleJobInput = (e) => {
     const name = e.target.name;
@@ -130,7 +129,7 @@ const AddJob = () => {
               onClick={(e) => {
                 e.preventDefault();
                 clearValue();
-                // console.log("clear value");
+                console.log("clear value");
               }}
             >
               clear

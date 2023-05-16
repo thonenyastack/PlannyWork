@@ -11,6 +11,7 @@ const register = async (req, res, next) => {
   if (!name || !email || !password) {
     const error = new BadRequestError("Please provide all the field");
     next(error);
+    return;
   }
 
   try {
@@ -37,6 +38,7 @@ const login = async (req, res, next) => {
   if (!email || !password) {
     const error = new UnAuthenicatedRequest("Plese provide all fields..");
     next(error);
+    return;
   }
   try {
     const user = await User.findOne({ email }).select("+password");
@@ -44,7 +46,7 @@ const login = async (req, res, next) => {
       const error = new UnAuthenicatedRequest("Invalid Login Request..");
       next(error);
     }
-    console.log(user);
+    // comparePassword function from user model invoked and validate provided password
     const isPasswordCorrect = await user.comparePassword(password);
 
     if (isPasswordCorrect) {
@@ -56,6 +58,10 @@ const login = async (req, res, next) => {
       // if (!user) {
       //   // throw new UnAuthenicatedRequest("Invalid Credential");
       //   const error = new UnAuthenicatedRequest("Invalid Credential");
+    } else {
+      const error = new UnAuthenicatedRequest("Invalid Login.");
+      next(error);
+      return;
     }
   } catch (error) {
     next(error);
@@ -68,6 +74,7 @@ const updateUser = async (req, res, next) => {
   if (!email || !name || !lastName || !location) {
     const error = new BadRequestError("Please provide all the fields");
     next(error);
+    return;
   }
   try {
     // findOneAndUpdate would simly do the job..
@@ -98,6 +105,7 @@ const listUsers = async (req, res, next) => {
   if (!role && !role == "supervisor") {
     const error = new BadRequestError("Invalid Request");
     next(error);
+    return;
   }
   try {
     const users = await User.find({ role: "user" });

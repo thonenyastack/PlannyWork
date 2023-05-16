@@ -2,27 +2,22 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Landing, Register, Error, ProtectedRoute } from "./pages/PageIndex.js";
 import {
   AllJobs,
-  AllMeetings,
   Profile,
   SharedLayout,
   Stats,
   AddJob,
-  CreateMeeting,
   AllUsers,
 } from "./pages/dashboard/DashboardIndex.js";
 
-import styled from "styled-components";
-
-const Button = styled.button`
-  background: red;
-  color: white;
-  font-size: 2rem;
-`;
+// import styled from "styled-components";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Create Nested Route: Wrap all the dashboard routes inside Nested Protected route */}
+        {/* Set Root "/" path as Protected at where validate user login.
+         No logged in will be redireted to /register route */}
         <Route
           path="/"
           element={

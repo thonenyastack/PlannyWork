@@ -4,10 +4,9 @@ import mongoose from "mongoose";
 import connectDB from "./db/connect.js";
 import authRoutes from "./routes/authRoutes.js";
 import jobRoutes from "./routes/jobRoutes.js";
-import meetingRoutes from "./routes/meetingRoutes.js";
-import errorHandlerMiddleware from "./middleware/error-handler.js";
-import notFoundMiddleware from "./middleware/not-found.js";
-import authenticateUser from "./middleware/auth.js";
+import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
+import notFoundMiddleware from "./middleware/notFoundMiddleware.js";
+import authenticateUser from "./middleware/authenticateUser.js";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import "express-async-errors";
@@ -26,7 +25,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 // process.env.NODE_ENV = "production";
-
+// Mount HTTP request logging middleware
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
@@ -34,45 +33,43 @@ if (process.env.NODE_ENV !== "production") {
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  // throw new Error("error");
-  res.json({ msg: "API:Home Sweet Home" });
-});
-
 app.get("/api/v1", (req, res) => {
   // throw new Error("error");
-  res.json({ msg: "WorkPlanner App API Root" });
+  res.send({ msg: "WorkPlanner App API Root" });
 });
 
+// mount the authRoute middleware function for specified request path
 app.use("/api/v1/auth", authRoutes);
+// mount the jobRoutes, Authenicate the user function middleware for specified requested path
 app.use("/api/v1/jobs", authenticateUser, jobRoutes);
-app.use("/api/v1/meetings", authenticateUser, meetingRoutes);
 
+/* If none of the above route match, treat them as not found
+   mount the generic errorHandler middleware to handle all error: response generalization */
+app.use(notFoundMiddleware);
+
+// If none of the above route match, treat them as not found
+app.use(errorHandlerMiddleware);
+
+//
 // Monolothic Deployment Approach
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
 //
-app.use(errorHandlerMiddleware);
-app.use(notFoundMiddleware);
 
 const port = process.env.PORT || 5000;
 const url = process.env.dbconnectionString;
-// console.log("test");
-// app.listen(port, () => {
-//   console.log(`Server listening on port ${port}`);
-// });
 
 const start = async () => {
   try {
-    await connectDB(url);
+    connectDB(url);
     app.listen(port, () => {
       console.log(`Server listening on port ${port}`);
       // console.log(process.env.NODE_ENV.trim());
       // console.log(`Current Directory: ${__dirname}`);
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

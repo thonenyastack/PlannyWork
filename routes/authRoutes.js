@@ -4,7 +4,7 @@ import {
   updateUser,
   listUsers,
 } from "../controllers/authController.js";
-import authenticateUser from "../middleware/auth.js";
+import authenticateUser from "../middleware/authenticateUser.js";
 import express from "express";
 const router = express.Router();
 

@@ -5,10 +5,13 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
+    "test": "jest",
     "dev": "nodemon server.js",
     "build": "cd client && npm install && npm run build",
     "server": "node server --ignore client",
-    "start": "node server.js"
+    "start": "node server.js",
+    "client": "npm start --prefix client",
+    "parallel": "concurrently --kill-others-on-fail \" npm run server\" \" npm run client \" "
   },
   "keywords": [],
   "author": "",

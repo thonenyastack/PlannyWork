@@ -25,6 +25,7 @@ const SearchContainer = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLocalSearch("");
     resetFilters();
   };
 
@@ -35,7 +36,7 @@ const SearchContainer = () => {
       setLocalSearch(e.target.value);
       clearTimeout(timeoutID);
       timeoutID = setTimeout(() => {
-        handleChange({ name: e.target.name, value: e.target.value });
+        handleChange({ name: "search", value: e.target.value });
       }, 1000);
     };
   };

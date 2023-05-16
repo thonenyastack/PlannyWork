@@ -11,7 +11,6 @@ import StatsItem from "./StatsItem";
 import StatsContainer from "./StatsContainer";
 import Loading from "./Loading";
 import ChartsContainer from "./ChartsContainer";
-import MeetingsContainer from "./MeetingsContainer";
 
 export {
   Logo,
@@ -27,5 +26,4 @@ export {
   StatsContainer,
   Loading,
   ChartsContainer,
-  MeetingsContainer,
 };
