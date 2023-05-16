@@ -49,6 +49,7 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
+// mongoDB pre save Hooks to pre-validate if the password field is being modified
 UserSchema.pre("save", async function () {
   // console.log(this.modifiedPaths());
   // console.log(this.isModified("name"));
@@ -61,6 +62,7 @@ UserSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
+// Use MongoDB instance methods schema.methods.customfunction create JWT
 UserSchema.methods.createJWT = function () {
   return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
@@ -68,6 +70,7 @@ UserSchema.methods.createJWT = function () {
   });
 };
 
+// Use MongoDB instance methods schema.methods.customfunction comparePassword to validate password
 UserSchema.methods.comparePassword = async function (candidatePassword) {
   const isMatch = await bcrypt.compare(candidatePassword, this.password);
   return isMatch;

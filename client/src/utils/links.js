@@ -14,13 +14,6 @@ const links = [
     icon: <MdQueryStats />,
   },
   { id: 3, text: "Create Jobsheet", path: "add-job", icon: <FaWpforms /> },
-  // { id: 5, text: "All Meetings", path: "all-meetings", icon: <GoCalendar /> },
-  // {
-  //   id: 6,
-  //   text: "Create Meeting",
-  //   path: "create-meeting",
-  //   icon: <GoCalendar />,
-  // },
 
   { id: 4, text: "profile", path: "profile", icon: <ImProfile /> },
   { id: 7, text: "Teams", path: "all-users", icon: <MdSupervisorAccount /> },

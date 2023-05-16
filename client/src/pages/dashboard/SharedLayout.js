@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 import Wrapper from "../../assets/wrappers/SharedLayout";
 import {
@@ -16,6 +16,7 @@ const SharedLayout = () => {
         <div>
           <Navbar />
           <div className="dashboard-page">
+            {/* Outlet:Placeholder enable Protected Route to render its children routes */}
             <Outlet />
           </div>
         </div>

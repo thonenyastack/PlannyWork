@@ -47,13 +47,17 @@ const getAllJobs = async (req, res) => {
   }
 
   if (search) {
-    queryObject.position = { $regex: search, $options: "i" };
+    queryObject.company = { $regex: search, $options: "i" };
+    // queryObject.company = { $regex: /ABC/i };
+    // queryObject.company = search;
+    // Job.find({ company: { $regex: /A/i } });
   }
-  console.log(queryObject);
+  console.log(`query object is ${queryObject}`);
+  // console.log(queryObject);
   let result = Job.find(queryObject);
 
   const totalJobs = await Job.countDocuments(queryObject);
-  const numberOfPages = Math.ceil(totalJobs / queryLimit);
+  const numOfPages = Math.ceil(totalJobs / queryLimit);
 
   if (sort === "latest") {
     result = result.sort("-createdAt");
@@ -73,7 +77,7 @@ const getAllJobs = async (req, res) => {
   result = result.skip(skipQuery).limit(queryLimit);
   const jobs = await result;
 
-  res.status(StatusCodes.OK).json({ jobs, totalJobs, numberOfPages });
+  res.status(StatusCodes.OK).json({ jobs, totalJobs, numOfPages });
 };
 
 const showStats = async (req, res) => {
@@ -125,9 +129,9 @@ const deleteJob = async (req, res) => {
 const updateJob = async (req, res) => {
   const { id: jobID } = req.params;
 
-  const { company, position } = req.body;
+  const { company, jobName } = req.body;
 
-  if (!company || !position) {
+  if (!company || !jobName) {
     throw new BadRequestError("Please Provide all fields");
   }
 
