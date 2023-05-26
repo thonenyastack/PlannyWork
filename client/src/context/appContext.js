@@ -32,6 +32,7 @@ import {
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
   GET_USERS_ERROR,
+  CHANGE_PAGE,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -54,6 +55,7 @@ const initialState = {
   editJobId: "",
   position: "",
   company: "",
+  jobType: "remote",
   jobTypeOptions: ["remote", "on-site", "ad-hoc"],
   statusOptions: ["ongoing", "completed"],
   status: "ongoing",
@@ -81,15 +83,13 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
-  // axios.defaults.headers["Authorization"] = `Bearer ${state.token}`;
-
+  /* All the API call to Server handle by axios */
   const authFetch = axios.create({
+    /* Set the Based URL for logged in user */
     baseURL: "/api/v1",
-    // headers: {
-    //   Authorization: `Bearer ${state.token}`,
-    // },
   });
 
+  /*  */
   authFetch.interceptors.request.use(
     (config) => {
       // config.defaults.headers.common["Authorization"] = `Bearer ${state.token}`;
@@ -291,8 +291,8 @@ const AppProvider = ({ children }) => {
   };
 
   const getJobs = async () => {
-    const { search, searchStatus, searchType, sort } = state;
-    let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
+    const { page, search, searchStatus, searchType, sort } = state;
+    let url = `/jobs?page=${page}&status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
 
     if (search) {
       url = url + `&search=${search}`;
@@ -365,6 +365,9 @@ const AppProvider = ({ children }) => {
     // console.log("Reset Funtion");
     dispatch({ type: RESET_FILTER });
   };
+  const changePage = (page) => {
+    dispatch({ type: CHANGE_PAGE, payload: { page } });
+  };
 
   return (
     <AppContext.Provider
@@ -387,6 +390,7 @@ const AppProvider = ({ children }) => {
         showStats,
         resetFilters,
         getUsers,
+        changePage,
       }}
     >
       {children}
