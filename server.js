@@ -44,17 +44,18 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/jobs", authenticateUser, jobRoutes);
 
 /* If none of the above route match, treat them as not found
-   mount the generic errorHandler middleware to handle all error: response generalization */
-app.use(notFoundMiddleware);
+mount the generic errorHandler middleware to handle all error: response generalization */
 
 // If none of the above route match, treat them as not found
-app.use(errorHandlerMiddleware);
+app.use(notFoundMiddleware);
 
+app.use(errorHandlerMiddleware);
 //
 // Monolothic Deployment Approach
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
+
 //
 
 const port = process.env.PORT || 5000;

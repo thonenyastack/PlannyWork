@@ -52,7 +52,7 @@ const getAllJobs = async (req, res) => {
     // queryObject.company = search;
     // Job.find({ company: { $regex: /A/i } });
   }
-  console.log(`query object is ${queryObject}`);
+  // console.log(`query object is ${queryObject}`);
   // console.log(queryObject);
   let result = Job.find(queryObject);
 
@@ -96,8 +96,8 @@ const showStats = async (req, res) => {
   }, {});
 
   const defaultStats = {
-    pending: stats.ongoing || 0,
-    interview: stats.completed || 0,
+    ongoing: stats.ongoing || 0,
+    completed: stats.completed || 0,
     // declined: stats.declined || 0,
   };
   let monthlyApplications = await Job.aggregate([

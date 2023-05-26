@@ -21,7 +21,7 @@ const JobsContainer = () => {
 
   useEffect(() => {
     getJobs();
-  }, [search, searchStatus, searchType, sort]);
+  }, [page, search, searchStatus, searchType, sort]);
 
   if (isLoading) {
     return <Loading center />;
@@ -45,7 +45,7 @@ const JobsContainer = () => {
           return <Job key={job._id} {...job} />;
         })}
       </div>
-      {/* {numOfPages > 1 && <PageBtnContainer />} */}
+      <div>{numOfPages > 1 && <PageBtnContainer />}</div>
     </Wrapper>
   );
 };
