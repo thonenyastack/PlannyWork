@@ -34,6 +34,8 @@ import {
   GET_USERS_ERROR,
   CHANGE_PAGE,
   HANDLE_FILE,
+  FILE_UPLOAD_STATUS,
+  FILE_UPLOAD_ERROR,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -54,7 +56,6 @@ const initialState = {
   isEditing: false,
   showSideBar: false,
   editJobId: "",
-  position: "",
   company: "",
   jobType: "remote",
   jobTypeOptions: ["remote", "on-site", "ad-hoc"],
@@ -79,7 +80,6 @@ const initialState = {
   searchType: "all",
   sort: "latest",
   sortOptions: ["latest", "oldest", "a-z", "z-a"],
-  attachedFile: [],
 };
 
 const AppContext = React.createContext();
@@ -98,7 +98,7 @@ const AppProvider = ({ children }) => {
     (config) => {
       // config.defaults.headers.common["Authorization"] = `Bearer ${state.token}`;
       config.headers["Authorization"] = `Bearer ${state.token}`;
-      console.log(config);
+      // console.log(config);
       return config;
     },
     (error) => {
@@ -115,11 +115,16 @@ const AppProvider = ({ children }) => {
       console.log(error.response);
       if (error.response.status === 401) {
         console.log("Auth Error");
+      } else if (error.response.status === 400) {
+        // console.log(error.response.data.msg);
+        // console.log("Other Error");
+        fileUploadError(error.response.data.msg);
       }
       return Promise.reject(error);
     }
   );
 
+  // Generic Alert for form input
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
     clearAlert();
@@ -174,9 +179,9 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGIN_USER_BEGIN });
     try {
       const { data } = await axios.post("/api/v1/auth/login", currentUser);
-      console.log(data);
+      // console.log(data);
       const { user, token, location, role } = data;
-      console.log(location);
+      // console.log(location);
       dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: { user, token, location, role },
@@ -248,7 +253,6 @@ const AppProvider = ({ children }) => {
           stats: data.defaultStats,
           monthlyJobSheets: data.monthlyJobSheets,
           weeklyJobSheets: data.weeklyJobSheets,
-          dailyJobSheets: data.dailyJobSheets,
         },
       });
     } catch (error) {
@@ -260,7 +264,7 @@ const AppProvider = ({ children }) => {
 
   const handleFile = ({ attachedFile }) => {
     dispatch({ type: HANDLE_FILE, payload: { attachedFile } });
-    console.log(attachedFile);
+    // console.log(attachedFile);
   };
 
   const createJob = async () => {
@@ -301,6 +305,18 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  // Form and File Upload Status
+  const fileUploadStatus = () => {
+    dispatch({ type: FILE_UPLOAD_STATUS });
+    dispatch({ type: CLEAR_VALUES });
+    clearAlert();
+  };
+  const fileUploadError = (error) => {
+    dispatch({ type: FILE_UPLOAD_ERROR, payload: { error } });
+    dispatch({ type: CLEAR_VALUES });
+    clearAlert();
+  };
+
   const getJobs = async () => {
     const { page, search, searchStatus, searchType, sort } = state;
     let url = `/jobs?page=${page}&status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
@@ -338,14 +354,28 @@ const AppProvider = ({ children }) => {
   const editJob = async () => {
     dispatch({ type: EDIT_JOB_BEGIN });
     try {
-      const { position, company, jobLocation, jobType, status } = state;
-
-      await authFetch.patch(`/jobs/${state.editJobId}`, {
+      const {
+        jobSheetNo,
+        jobName,
         company,
-        position,
         jobLocation,
         jobType,
         status,
+        start,
+        end,
+        duration,
+      } = state;
+
+      await authFetch.patch(`/jobs/${state.editJobId}`, {
+        jobSheetNo,
+        jobName,
+        company,
+        jobLocation,
+        jobType,
+        status,
+        start,
+        end,
+        duration,
       });
 
       dispatch({ type: EDIT_JOB_SUCCESS });
@@ -358,7 +388,7 @@ const AppProvider = ({ children }) => {
       });
     }
 
-    console.log("edit job function");
+    // console.log("edit job function");
   };
 
   const deleteJob = async (jobId) => {
@@ -402,7 +432,10 @@ const AppProvider = ({ children }) => {
         resetFilters,
         getUsers,
         changePage,
+        authFetch,
         handleFile,
+        fileUploadStatus,
+        fileUploadError,
       }}
     >
       {children}

@@ -177,10 +177,10 @@ const updateJob = async (req, res) => {
     throw new NotFoundError("No Job Found");
   }
 
-  console.log(typeof req.user.userId);
-  console.log(req.user.userId);
-  console.log(typeof job.createdBy);
-  console.log(job.createdBy);
+  // console.log(typeof req.user.userId);
+  // console.log(req.user.userId);
+  // console.log(typeof job.createdBy);
+  // console.log(job.createdBy);
 
   checkAuthorization(req.user, job.createdBy);
 

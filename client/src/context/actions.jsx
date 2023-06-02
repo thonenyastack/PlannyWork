@@ -46,3 +46,6 @@ export const GET_USER_JOB_ERROR = "GET_USER_JOB_ERROR";
 export const CHANGE_PAGE = "CHANGE_PAGE";
 
 export const HANDLE_FILE = "HANDLE_FILE";
+
+export const FILE_UPLOAD_STATUS = "FILE_UPLOAD_STATUS";
+export const FILE_UPLOAD_ERROR = "FILE_UPLOAD_ERROR";
