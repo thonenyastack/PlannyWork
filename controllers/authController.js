@@ -109,7 +109,7 @@ const listUsers = async (req, res, next) => {
   }
   try {
     const users = await User.find({ role: "user" });
-    res.status(StatusCodes.OK).json({ userRole: users });
+    res.status(StatusCodes.OK).json({ userRoles: users });
     console.log(users);
   } catch (error) {
     next(error);

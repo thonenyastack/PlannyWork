@@ -25,10 +25,15 @@ const AddJob = () => {
     clearValue,
     isLoading,
     createJob,
+    handleFile,
   } = useAppContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // if (e.target.files[0]) {
+    //   const selectedFile = e.target.files[0];
+    //   handleFile({ selectedFile });
+    // }
 
     if (!jobSheetNo || !jobName || !company) {
       displayAlert();
@@ -47,9 +52,15 @@ const AddJob = () => {
     handleChange({ name, value });
     // console.log(`${name}: ${value}`);
   };
+  const handleFileChange = (e) => {
+    // console.log(e.target.files[0]);
+    const attachedFile = e.target.files[0];
+    handleFile({ attachedFile });
+  };
+
   return (
     <Wrapper>
-      <form className="form">
+      <form className="form" encType="multipart/form-data">
         <h3>{isEditing ? "edit jobsheet" : "create jobsheet"}</h3>
         {showAlert && <Alert />}
         <div className="form-center">
@@ -129,11 +140,25 @@ const AddJob = () => {
               onClick={(e) => {
                 e.preventDefault();
                 clearValue();
-                console.log("clear value");
+                // console.log("clear value");
               }}
             >
               clear
             </button>
+            {/* <label htmlFor="image">Attach Jobsheet</label> */}
+            <input
+              type="file"
+              name="attachedFile"
+              className="attach-btn"
+              onChange={handleFileChange}
+            />
+            {/* <button
+              className="btn btn-block attach-btn"
+              onClick={handleUpload}
+              disabled={isLoading}
+            >
+              Attach 📎
+            </button> */}
           </div>
         </div>
       </form>

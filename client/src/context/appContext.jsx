@@ -33,6 +33,7 @@ import {
   GET_USERS_SUCCESS,
   GET_USERS_ERROR,
   CHANGE_PAGE,
+  HANDLE_FILE,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -70,12 +71,15 @@ const initialState = {
   numOfPages: 1,
   page: 1,
   stats: {},
-  monthlyApplications: [],
+  monthlyJobSheets: [],
+  weeklyJobSheets: [],
+  dailyJobSheets: [],
   search: "",
   searchStatus: "all",
   searchType: "all",
   sort: "latest",
   sortOptions: ["latest", "oldest", "a-z", "z-a"],
+  attachedFile: [],
 };
 
 const AppContext = React.createContext();
@@ -209,11 +213,11 @@ const AppProvider = ({ children }) => {
     dispatch({ type: GET_USERS_BEGIN });
     try {
       const { data } = await authFetch.get("/auth/listUsers", currentUser);
-      const { userRole } = data;
+      const { userRoles } = data;
       dispatch({
         type: GET_USERS_SUCCESS,
         payload: {
-          userRole,
+          userRoles,
         },
       });
       console.log(data);
@@ -242,7 +246,9 @@ const AppProvider = ({ children }) => {
         type: SHOW_STATS_SUCCESS,
         payload: {
           stats: data.defaultStats,
-          monthlyApplications: data.monthlyApplications,
+          monthlyJobSheets: data.monthlyJobSheets,
+          weeklyJobSheets: data.weeklyJobSheets,
+          dailyJobSheets: data.dailyJobSheets,
         },
       });
     } catch (error) {
@@ -250,6 +256,11 @@ const AppProvider = ({ children }) => {
       logoutUser();
     }
     clearAlert();
+  };
+
+  const handleFile = ({ attachedFile }) => {
+    dispatch({ type: HANDLE_FILE, payload: { attachedFile } });
+    console.log(attachedFile);
   };
 
   const createJob = async () => {
@@ -391,6 +402,7 @@ const AppProvider = ({ children }) => {
         resetFilters,
         getUsers,
         changePage,
+        handleFile,
       }}
     >
       {children}

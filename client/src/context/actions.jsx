@@ -44,3 +44,5 @@ export const GET_USER_JOB_SUCCESS = "GET_USER_JOB_SUCCESS";
 export const GET_USER_JOB_ERROR = "GET_USER_JOB_ERROR";
 
 export const CHANGE_PAGE = "CHANGE_PAGE";
+
+export const HANDLE_FILE = "HANDLE_FILE";

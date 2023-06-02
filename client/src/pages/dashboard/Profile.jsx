@@ -24,7 +24,7 @@ const Profile = () => {
 
   return (
     <Wrapper>
-      <form children="form" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <h3>Profile</h3>
         {showAlert && <Alert />}
         <div className="form-center">

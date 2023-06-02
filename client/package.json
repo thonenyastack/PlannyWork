@@ -1,51 +1,44 @@
 {
-  "name": "plannywork_client",
-  "version": "1.1.0",
-  "private": true,
-  "dependencies": {
+  "name": "plannyworkclient",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "CI=false vite build",
+    "preview": "vite preview",
+    "format": "prettier --write \"src/**/*.{js,jsx}\"",
+    "lint": "eslint \"src/**/*.{js,jsx}\" quiet",
+    "test": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
+    "@testing-library/react": "^14.0.0",
+    "@vitejs/plugin-react": "^2.1.0",
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.8",
+    "jsdom": "^22.0.0",
+    "prettier": "^2.7.1",
+    "vite": "^3.1.4",
+    "vitest": "^0.31.1"
+  },
+  "proxy": "http://localhost:5000",
+  "dependencies": {
     "axios": "^1.2.0",
     "history": "^5.3.0",
     "moment": "^2.29.4",
-    "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
-    "react-router-dom": "^6.4.3",
-    "react-scripts": "5.0.1",
-    "recharts": "^2.2.0",
-    "styled-components": "^5.3.6",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "CI=false react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "proxy": "http://localhost:5000",
-  "devDependencies": {
-    "jsdom": "^21.1.1"
+    "react-router-dom": "^6.11.2",
+    "recharts": "^2.6.2",
+    "styled-components": "^6.0.0-rc.1"
   }
 }

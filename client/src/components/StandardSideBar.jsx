@@ -1,10 +1,10 @@
-import Wrapper from "../assets/wrappers/BigSidebar.js";
+import Wrapper from "../assets/wrappers/BigSidebar";
 import { FaTimes } from "react-icons/fa";
 import { useAppContext } from "../context/appContext";
 // import { NavLink } from "react-router-dom";
 // import links from "../utils/links.js";
 import Logo from "./Logo";
-import NavLinks from "./NavLinks.js";
+import NavLinks from "./NavLinks";
 
 const StandardSideBar = () => {
   const { showSideBar } = useAppContext();

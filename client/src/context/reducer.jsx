@@ -27,6 +27,7 @@ import {
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
   CHANGE_PAGE,
+  HANDLE_FILE,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -194,7 +195,7 @@ const AppReducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      users: action.payload.userRole,
+      users: action.payload.userRoles,
     };
   }
 
@@ -246,7 +247,9 @@ const AppReducer = (state, action) => {
       ...state,
       isLoading: false,
       stats: action.payload.stats,
-      monthlyApplications: action.payload.monthlyApplications,
+      weeklyJobSheets: action.payload.weeklyJobSheets,
+      monthlyJobSheets: action.payload.monthlyJobSheets,
+      dailyJobSheets: action.payload.dailyJobSheets,
     };
   }
 
@@ -267,6 +270,10 @@ const AppReducer = (state, action) => {
   }
   if (action.type === CHANGE_PAGE) {
     return { ...state, page: action.payload.page };
+  }
+
+  if (action.type === HANDLE_FILE) {
+    return { ...state, attachedFile: action.payload.attachedFile };
   }
   throw new Error(`no such action: ${action.type}`);
 };

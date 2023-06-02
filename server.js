@@ -10,7 +10,6 @@ import authenticateUser from "./middleware/authenticateUser.js";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import "express-async-errors";
-
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
@@ -20,7 +19,7 @@ mongoose.set("strictQuery", true);
 const app = express();
 dotenv.config();
 
-// Monolothic Deployment Approach
+// Monolothic Alike Deployment Approach/Style
 const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.resolve(__dirname, "./client/build")));
 
@@ -38,19 +37,18 @@ app.get("/api/v1", (req, res) => {
   res.send({ msg: "WorkPlanner App API Root" });
 });
 
-// mount the authRoute middleware function for specified request path
+// mount the authRoute, & Pass middleware function for specified request path
 app.use("/api/v1/auth", authRoutes);
 // mount the jobRoutes, Authenicate the user function middleware for specified requested path
 app.use("/api/v1/jobs", authenticateUser, jobRoutes);
 
 /* If none of the above route match, treat them as not found
 mount the generic errorHandler middleware to handle all error: response generalization */
+app.use(errorHandlerMiddleware);
 
 // If none of the above route match, treat them as not found
 app.use(notFoundMiddleware);
 
-app.use(errorHandlerMiddleware);
-//
 // Monolothic Deployment Approach
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));

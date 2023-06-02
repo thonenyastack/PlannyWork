@@ -1,6 +1,7 @@
 import React from "react";
-import { ReactDOM, render } from "react-dom";
-import Job from "../../components/Job.js";
+import { render, screen } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
+import Job from "../Job";
 
 const jobOne = {
   _id: "642580b94e1bc8a2164ce0d3",
@@ -37,7 +38,8 @@ const jobTwo = {
 const jobs = [jobOne, jobTwo];
 
 describe("Job", () => {
-  test("render all job properties", () => {
+  it("render all job properties", () => {
     render(<Job key={jobOne._id} {...jobOne} />);
+    screen.debug();
   });
 });
