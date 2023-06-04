@@ -253,6 +253,7 @@ const AppProvider = ({ children }) => {
           stats: data.defaultStats,
           monthlyJobSheets: data.monthlyJobSheets,
           weeklyJobSheets: data.weeklyJobSheets,
+          dailyJobSheets: data.dailyJobSheets,
         },
       });
     } catch (error) {

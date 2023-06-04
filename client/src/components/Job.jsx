@@ -7,12 +7,14 @@ import JobInfo from "./JobInfo";
 
 const Job = ({
   _id,
+  jobSheetNo,
   position,
   jobLocation,
   jobType,
   company,
   createdAt,
   status,
+  attachedFileName,
 }) => {
   const { setEditJob, deleteJob } = useAppContext();
   let date = moment(createdAt);
@@ -23,6 +25,7 @@ const Job = ({
         <div className="main-icon">{company.charAt(0)} </div>
         <div className="info">
           {/* <h5>{position}</h5> */}
+          <h5>{jobSheetNo}</h5>
           <h5>{company}</h5>
           <h5>{date}</h5>
         </div>
@@ -52,6 +55,17 @@ const Job = ({
               Delete
             </button>
           </div>
+          <div class="attachedFile">
+            <span>Attached Jobsheet:</span>
+            <a href={`/uploads/${attachedFileName}`} target="_blank">
+              {attachedFileName}
+              <img src={`/uploads/${attachedFileName}`} />
+            </a>
+          </div>
+
+          {/* <img
+            src={process.env.PUBLIC_URL + "/1685859024019--smallsized1.jpg"}
+          /> */}
         </footer>
       </div>
     </Wrapper>

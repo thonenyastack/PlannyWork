@@ -86,8 +86,8 @@ const FeaturedChart = () => {
           {/* {console.log(Object.keys(weeklyJobSheets))} */}
           {/* {console.log(JSON.parse(JSON.stringify(weeklyJobSheets)))} */}
           {/* {console.log(Object.keys(lastWeek))} */}
-          {console.log(currentWeek)}
-          {console.log(currentDay)}
+          {/* {console.log(currentWeek)}
+          {console.log(currentDay)} */}
         </div>
       </div>
     </div>

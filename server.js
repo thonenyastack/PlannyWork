@@ -21,7 +21,12 @@ dotenv.config();
 
 // Monolothic Alike Deployment Approach/Style
 const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+// app.use(express.static(path.resolve(__dirname, "./client/build")));
+app.use(express.static(path.resolve(__dirname, "./client/src/dist")));
+app.use(
+  "/uploads",
+  express.static(path.resolve(__dirname, "./client/public/uploads"))
+);
 
 // process.env.NODE_ENV = "production";
 // Mount HTTP request logging middleware
@@ -42,17 +47,18 @@ app.use("/api/v1/auth", authRoutes);
 // mount the jobRoutes, Authenicate the user function middleware for specified requested path
 app.use("/api/v1/jobs", authenticateUser, jobRoutes);
 
+// Monolothic Deployment Approach
+app.get("*", (req, res) => {
+  // res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "./client/src/dist", "index.html"));
+});
+
 /* If none of the above route match, treat them as not found
 mount the generic errorHandler middleware to handle all error: response generalization */
 app.use(errorHandlerMiddleware);
 
 // If none of the above route match, treat them as not found
 app.use(notFoundMiddleware);
-
-// Monolothic Deployment Approach
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
-});
 
 //
 

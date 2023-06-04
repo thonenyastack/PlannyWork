@@ -6,7 +6,35 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import moment from "moment";
+import { useAppContext } from "../context/appContext";
 
+let now = moment();
+let currentDay = now.get("date");
+// const { monthlyJobSheet } = useAppContext();
+const monthlyJobSheet = [
+  {
+    _id: {
+      year: 2023,
+      month: 5,
+    },
+    count: 15,
+  },
+  {
+    _id: {
+      year: 2023,
+      month: 6,
+    },
+    count: 15,
+  },
+];
+
+let monthlyData = monthlyJobSheet.map((job) => {
+  return {
+    month: job._id.month,
+    count: job.count,
+  };
+});
 const data = [
   { name: "March", Total: 25 },
   { name: "April", Total: 20 },

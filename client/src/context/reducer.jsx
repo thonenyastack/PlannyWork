@@ -262,6 +262,7 @@ const AppReducer = (state, action) => {
       stats: action.payload.stats,
       weeklyJobSheets: action.payload.weeklyJobSheets,
       monthlyJobSheets: action.payload.monthlyJobSheets,
+      dailyJobSheets: action.payload.dailyJobSheets,
     };
   }
 

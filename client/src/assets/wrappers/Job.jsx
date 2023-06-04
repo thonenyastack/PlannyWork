@@ -9,6 +9,7 @@ const Wrapper = styled.article`
 
   header {
     padding: 1rem 1.5rem;
+    width: min(140px, 80vw)
     border-bottom: 1px solid var(--grey-100);
     display: grid;
     grid-template-columns: auto 1fr;
@@ -112,6 +113,11 @@ const Wrapper = styled.article`
   }
   &:hover .actions {
     visibility: visible;
+  }
+  .img {
+  width: min(400px, 80vw)
+  height: min(360px, 70vh)
+  
   }
 `;
 

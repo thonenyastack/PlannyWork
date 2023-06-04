@@ -2,6 +2,8 @@
 .DS_Store
 /client/node_modules
 /MOCK_DATA
-.env
 populatev3.js
 /uploads
+.env
+/client/src/dist/
+/client/public/uploads

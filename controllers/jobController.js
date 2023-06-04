@@ -9,14 +9,12 @@ const createJob = async (req, res, next) => {
   // res.send("Create Job");
   const { jobSheetNo, jobName, company } = req.body;
   const attachedFileName = req.file.filename;
-  const attachedFileType = req.file.mimetype;
+  // const attachedFileType = req.file.mimetype;
   console.log(req.file);
 
   if (!jobSheetNo || !jobName || !company) {
     console.error(`Request Error ${req}`);
-    const error = new BadRequestError(
-      `Please provide all fields ${attachedFileType} ${attachedFileName}`
-    );
+    const error = new BadRequestError(`Please provide all fields`);
     next(error);
     return;
   }

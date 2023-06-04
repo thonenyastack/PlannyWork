@@ -21,7 +21,7 @@ import multer from "multer";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.resolve(__dirname, "../uploads/"));
+    cb(null, path.resolve(__dirname, "../client/public/uploads"));
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "--" + file.originalname);
