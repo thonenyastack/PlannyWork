@@ -67,6 +67,9 @@ const JobSchema = new mongoose.Schema(
     duration: {
       type: String,
     },
+    attachedFileName: {
+      type: String,
+    },
     createdBy: {
       type: mongoose.Types.ObjectId,
       ref: "User",

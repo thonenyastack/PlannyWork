@@ -101,7 +101,7 @@ const updateUser = async (req, res, next) => {
 
 const listUsers = async (req, res, next) => {
   const { role } = req.body;
-  console.log({ UserRole: role });
+  // console.log({ UserRole: role });
   if (!role && !role == "supervisor") {
     const error = new BadRequestError("Invalid Request");
     next(error);
@@ -109,8 +109,8 @@ const listUsers = async (req, res, next) => {
   }
   try {
     const users = await User.find({ role: "user" });
-    res.status(StatusCodes.OK).json({ userRole: users });
-    console.log(users);
+    res.status(StatusCodes.OK).json({ userRoles: users });
+    // console.log(users);
   } catch (error) {
     next(error);
   }

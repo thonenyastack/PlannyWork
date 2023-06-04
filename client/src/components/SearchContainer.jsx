@@ -1,4 +1,4 @@
-import { FormRow, FormRowSelect } from "./ComponentIndex.js";
+import { FormRow, FormRowSelect } from "./ComponentIndex";
 import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/SearchContainer";
 import { useState, useMemo } from "react";

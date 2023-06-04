@@ -7,14 +7,20 @@ import moment from "moment";
 
 const createJob = async (req, res, next) => {
   // res.send("Create Job");
-  const { jobName, company } = req.body;
+  const { jobSheetNo, jobName, company } = req.body;
+  const attachedFileName = req.file.filename;
+  // const attachedFileType = req.file.mimetype;
+  console.log(req.file);
 
-  if (!jobName || !company) {
-    const error = new BadRequestError("Please provide all fields");
+  if (!jobSheetNo || !jobName || !company) {
+    console.error(`Request Error ${req}`);
+    const error = new BadRequestError(`Please provide all fields`);
     next(error);
+    return;
   }
 
   req.body.createdBy = req.user.userId;
+  req.body.attachedFileName = attachedFileName;
 
   try {
     const job = await Job.create(req.body);
@@ -100,7 +106,7 @@ const showStats = async (req, res) => {
     completed: stats.completed || 0,
     // declined: stats.declined || 0,
   };
-  let monthlyApplications = await Job.aggregate([
+  let monthlyJobSheets = await Job.aggregate([
     { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
     {
       $group: {
@@ -109,9 +115,38 @@ const showStats = async (req, res) => {
       },
     },
     { $sort: { "_id.year": -1, "_id.month": -1 } },
-    { $limit: 12 },
+    /* Limiting query to get last three months */
+    { $limit: 4 },
   ]);
-  res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
+  let weeklyJobSheets = await Job.aggregate([
+    { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+    {
+      $group: {
+        _id: {
+          year: { $year: "$createdAt" },
+          month: { $month: "$createdAt" },
+          week: { $week: "$createdAt" },
+        },
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { "_id.week": -1 } },
+  ]);
+  let dailyJobSheets = await Job.aggregate([
+    { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+    {
+      $group: {
+        _id: { day: { $dayOfMonth: "$createdAt" } },
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { "_id.day": -1 } },
+    { $limit: 2 },
+  ]);
+
+  res
+    .status(StatusCodes.OK)
+    .json({ defaultStats, monthlyJobSheets, weeklyJobSheets, dailyJobSheets });
 };
 
 const deleteJob = async (req, res) => {
@@ -140,10 +175,10 @@ const updateJob = async (req, res) => {
     throw new NotFoundError("No Job Found");
   }
 
-  console.log(typeof req.user.userId);
-  console.log(req.user.userId);
-  console.log(typeof job.createdBy);
-  console.log(job.createdBy);
+  // console.log(typeof req.user.userId);
+  // console.log(req.user.userId);
+  // console.log(typeof job.createdBy);
+  // console.log(job.createdBy);
 
   checkAuthorization(req.user, job.createdBy);
 

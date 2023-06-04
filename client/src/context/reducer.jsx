@@ -27,6 +27,9 @@ import {
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
   CHANGE_PAGE,
+  HANDLE_FILE,
+  FILE_UPLOAD_STATUS,
+  FILE_UPLOAD_ERROR,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -194,22 +197,33 @@ const AppReducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      users: action.payload.userRole,
+      users: action.payload.userRoles,
     };
   }
 
   if (action.type === SET_EDIT_JOB) {
     const job = state.jobs.find((job) => job._id === action.payload.id);
-    const { _id, position, company, jobLocation, jobType, status } = job;
-    return {
-      ...state,
-      isEditing: true,
-      editJobId: _id,
-      position,
+    const {
+      _id,
+      jobSheetNo,
+      jobName,
       company,
       jobLocation,
       jobType,
       status,
+      duration,
+    } = job;
+    return {
+      ...state,
+      isEditing: true,
+      editJobId: _id,
+      jobSheetNo,
+      jobName,
+      company,
+      jobLocation,
+      jobType,
+      status,
+      duration,
     };
   }
 
@@ -246,7 +260,9 @@ const AppReducer = (state, action) => {
       ...state,
       isLoading: false,
       stats: action.payload.stats,
-      monthlyApplications: action.payload.monthlyApplications,
+      weeklyJobSheets: action.payload.weeklyJobSheets,
+      monthlyJobSheets: action.payload.monthlyJobSheets,
+      dailyJobSheets: action.payload.dailyJobSheets,
     };
   }
 
@@ -267,6 +283,27 @@ const AppReducer = (state, action) => {
   }
   if (action.type === CHANGE_PAGE) {
     return { ...state, page: action.payload.page };
+  }
+  if (action.type === HANDLE_FILE) {
+    return { ...state, attachedFile: action.payload.attachedFile };
+  }
+  if (action.type === FILE_UPLOAD_STATUS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Job Created.",
+    };
+  }
+  if (action.type === FILE_UPLOAD_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.error,
+    };
   }
   throw new Error(`no such action: ${action.type}`);
 };

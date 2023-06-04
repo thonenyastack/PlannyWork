@@ -3,6 +3,7 @@ import { FaSuitcaseRolling, FaCalendarCheck, FaBug } from "react-icons/fa";
 import StatsItem from "./StatsItem";
 import Wrapper from "../assets/wrappers/StatsContainer";
 import FeaturedChart from "./FeaturedChart";
+import StatsChart from "./StatsChart";
 
 const StatsContainer = () => {
   const { stats } = useAppContext();
@@ -35,6 +36,7 @@ const StatsContainer = () => {
         return <StatsItem key={index} {...item} />;
       })}
       <FeaturedChart />
+      <StatsChart />
     </Wrapper>
   );
 };

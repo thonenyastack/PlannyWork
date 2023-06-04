@@ -1,7 +1,7 @@
 import {
   JobsContainer,
   SearchContainer,
-} from "../../components/ComponentIndex.js";
+} from "../../components/ComponentIndex";
 
 const AllJobs = () => {
   return (

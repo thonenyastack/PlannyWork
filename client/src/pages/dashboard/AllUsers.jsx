@@ -1,5 +1,5 @@
 // import { SearchContainer, JobsContainer } from "../../components";
-import UsersListContainer from "../../components/UsersListContainer.js";
+import UsersListContainer from "../../components/UsersListContainer";
 import { useAppContext } from "../../context/appContext";
 
 const AllUsers = () => {
