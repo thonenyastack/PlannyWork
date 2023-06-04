@@ -28,9 +28,9 @@ username/password show as below.
 
 ![Landing Page](https://raw.githubusercontent.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/landingpage.png)
 
-<img src="https://cdn.rawgit.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/overview.png" alt="Overview Page" alt="Overview">
+<img src="https://cdn.rawgit.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/overviewnew.png" alt="Overview Page" alt="Overview">
 
-<img src="https://cdn.rawgit.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/alljobsheets.png" alt="All Jobs Page" title="AllJobSheet"
+<img src="https://cdn.rawgit.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/alljobsheetsnew.png" alt="All Jobs Page" title="AllJobSheet"
 style="display: inline-block; margin:0 auto; padding=20px; max-width: 640px;">
 
 <img src="https://cdn.rawgit.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/createjob.png" alt="All Jobs Page" title="Ceate Jobsheet"
