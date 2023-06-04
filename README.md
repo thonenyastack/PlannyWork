@@ -15,7 +15,7 @@ The app allow users to manage jobsheets for Field Service Engineers and Applicat
 
 ## Demo
 
-The NodeJS app including UI is being hosted on two different platform, Railway at [link](https://plannywork-production.up.railway.app/) and AWS EC2 at [link](http://43.207.141.249:5000)(server might have stopped to avoid recurring bill)
+The NodeJS app including UI is being hosted on two different platform, Railway at [link](https://plannywork-demo-app.up.railway.app/) and AWS EC2 at [link](http://43.207.141.249:5000)(server might have stopped to avoid recurring bill)
 
 ** Login Credentials **
 username/password show as below.
