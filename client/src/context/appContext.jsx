@@ -36,6 +36,9 @@ import {
   HANDLE_FILE,
   FILE_UPLOAD_STATUS,
   FILE_UPLOAD_ERROR,
+  GET_USER_JOBS_BEGIN,
+  GET_USER_JOBS_ERROR,
+  GET_USER_JOBS_SUCCESS,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -61,13 +64,15 @@ const initialState = {
   jobTypeOptions: ["remote", "on-site", "ad-hoc"],
   statusOptions: ["ongoing", "completed"],
   status: "ongoing",
-  startOptions: ["9:00", "9:30"],
+  startOptions: ["9:00", "9:30", "10:00", "10:30", "11:00"],
   start: "9:00",
-  endOptions: ["9:30", "10:00", "10:30"],
+  endOptions: ["9:30", "10:00", "10:30", "11:00", "11:30", "12:00"],
   end: "10:00",
   duration: "",
+  jobDescription: "",
   jobs: [],
   users: [],
+  userJobs: [],
   totalJobs: 0,
   numOfPages: 1,
   page: 1,
@@ -229,6 +234,23 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       dispatch({ type: GET_USERS_ERROR });
       console.log(error.response);
+    }
+  };
+
+  const getUserJobs = async (userId) => {
+    dispatch({ type: GET_USER_JOBS_BEGIN });
+    try {
+      const { data } = await authFetch.get(`/jobs/${userId}`);
+      const { jobs } = data;
+      console.log(data);
+      dispatch({
+        type: GET_USER_JOBS_SUCCESS,
+        payload: {
+          jobs,
+        },
+      });
+    } catch (error) {
+      dispatch({ type: GET_USER_JOBS_ERROR });
     }
   };
 
@@ -432,6 +454,7 @@ const AppProvider = ({ children }) => {
         showStats,
         resetFilters,
         getUsers,
+        getUserJobs,
         changePage,
         authFetch,
         handleFile,

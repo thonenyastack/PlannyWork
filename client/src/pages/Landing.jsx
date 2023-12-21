@@ -1,6 +1,7 @@
 import logo from "../assets/images/logo.svg";
 import main from "../assets/images/main.png";
-import Wrapper from "../assets/wrappers/Testing";
+import Wrapper from "../assets/wrappers/Landing";
+
 import { Link } from "react-router-dom";
 
 const Landing = () => {
@@ -15,7 +16,7 @@ const Landing = () => {
             Job <span>Planning</span> App
           </h1>
           <p>Work Smart,Plan Easy</p>
-          <Link to="/register" className="btn btn-hero">
+          <Link to="/register" className="btn btn-hero" id="Login">
             Login/Register
           </Link>
         </div>

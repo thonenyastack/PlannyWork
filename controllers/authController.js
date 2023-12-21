@@ -101,7 +101,6 @@ const updateUser = async (req, res, next) => {
 
 const listUsers = async (req, res, next) => {
   const { role } = req.body;
-  // console.log({ UserRole: role });
   if (!role && !role == "supervisor") {
     const error = new BadRequestError("Invalid Request");
     next(error);

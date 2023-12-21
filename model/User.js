@@ -20,14 +20,11 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     validate(value) {
-      // validator: validator.isEmail,
-      // message: "Please provide a valid Email",
-
       if (!validator.isEmail(value)) {
         throw Error("Invalid Email");
       }
     },
-    // required: [true, "Please provide email"],
+
     unique: true,
   },
   password: {
@@ -51,13 +48,10 @@ const UserSchema = new mongoose.Schema({
 
 // mongoDB pre save Hooks to pre-validate if the password field is being modified
 UserSchema.pre("save", async function () {
-  // console.log(this.modifiedPaths());
-  // console.log(this.isModified("name"));
   if (!this.isModified("password")) {
     return;
   }
 
-  // console.log(this.password);
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });

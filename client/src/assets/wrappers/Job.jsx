@@ -6,7 +6,14 @@ const Wrapper = styled.article`
   display: grid;
   grid-template-rows: 1fr auto;
   box-shadow: var(--shadow-2);
-
+  padding: 2rem;
+  span {
+    margin-right: 1rem;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
   header {
     padding: 1rem 1.5rem;
     width: min(140px, 80vw)
@@ -23,7 +30,6 @@ const Wrapper = styled.article`
     height: 60px;
     display: grid;
     place-items: center;
-    // background: var(--primary-500);
     background: #1c6d8b;
     border-radius: var(--borderRadius);
     font-size: 1.5rem;
@@ -33,6 +39,7 @@ const Wrapper = styled.article`
     margin-right: 2rem;
   }
   .info {
+    font-weight: 800;
     h5 {
       margin-bottom: 0.25rem;
     }
@@ -57,33 +64,29 @@ const Wrapper = styled.article`
   }
   .content {
     padding: 1rem 1.5rem;
+    // margin-bottom: 2rem;
   }
-  .content-center {
+  .content-status{
     display: grid;
-    grid-template-columns: 1fr;
-    row-gap: 0.2rem;
-    @media screen and (max-width: 480px) {
-      grid-template-columns: 1fr;
-    }
-    @media screen and (min-width: 480px) {
-      grid-template-columns: 1fr 1fr;
-    }
-    @media screen and (min-width: 769px) {
-      grid-template-columns: 1fr 1fr;
-    }
-    @media screen and (min-width: 1201px) {
-      grid-template-columns: 1fr;
-    }
-    // @media (min-width: 576px) {
-    //   grid-template-columns: 1fr 1fr;
-    // }
-    // @media (min-width: 992px) {
-    //   grid-template-columns: 1fr 1fr;
-    // }
-    // @media (min-width: 1120px) {
-    //   grid-template-columns: 1fr;
-    // }
+    grid-template-columns: 1fr 1fr;
   }
+  // .content-center {
+  //   display: grid;
+  //   grid-template-columns: 1fr;
+  //   row-gap: 0.2rem;
+  //   @media screen and (max-width: 480px) {
+  //     grid-template-columns: 1fr;
+  //   }
+  //   @media screen and (min-width: 480px) {
+  //     grid-template-columns: 1fr 1fr;
+  //   }
+  //   @media screen and (min-width: 769px) {
+  //     grid-template-columns: 1fr 1fr;
+  //   }
+  //   @media screen and (min-width: 1201px) {
+  //     grid-template-columns: 1fr;
+  //   }
+  // }
 
   .status {
     border-radius: var(--borderRadius);
@@ -92,6 +95,7 @@ const Wrapper = styled.article`
     text-align: center;
     width: 100px;
     height: 30px;
+    background: #F0E2A4; 
   }
   footer {
     margin-top: 1rem;
@@ -100,6 +104,7 @@ const Wrapper = styled.article`
   .delete-btn {
     letter-spacing: var(--letterSpacing);
     cursor: pointer;
+    width: 100px;
     height: 30px;
   }
   .edit-btn {

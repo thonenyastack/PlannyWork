@@ -46,7 +46,7 @@ html {
 
   /* fonts  */
   --headingFont: "Roboto Condensed", Sans-Serif;
-  --bodyFont: "Cabin", Sans-Serif;
+  --bodyFont: "Inter", Sans-Serif;
   --small-text: 0.875rem;
   --extra-small-text: 0.7em;
   /* rest of the vars */
@@ -256,6 +256,26 @@ ul {
   letter-spacing: var(--letterSpacing);
   text-transform: capitalize;
 }
+
+/* Main Content/Pane | Dashboard Page */
+.main-content {
+  /* min-height: 80%; */
+  min-height: calc(100vh - 50px);
+}
+
+/* footer */
+footer {
+  /* bottom: 0;
+  position: fixed; */
+  /* margin: 0; */
+  /* color: #fff; */
+  /* background: #222; */
+  height: 50px;
+  /* width: 100vw; */
+  /* margin-top: auto 0; */
+  text-align: center;
+}
+
 /* alert */
 
 @keyframes spinner {
@@ -298,20 +318,20 @@ ul {
   min-height: 100vh;
 }
 
-.coffee-info {
+/* .coffee-info {
   text-align: center;
   text-transform: capitalize;
   margin-bottom: 1rem;
   letter-spacing: var(--letterSpacing);
-}
-.coffee-info span {
+} */
+/* .coffee-info span {
   display: block;
 }
 .coffee-info a {
   color: var(--primary-500);
-}
+} */
 
-@media screen and (min-width: 992px) {
+/* @media screen and (min-width: 992px) {
   .coffee-info {
     text-align: left;
   }
@@ -319,4 +339,4 @@ ul {
     display: inline-block;
     margin-right: 0.5rem;
   }
-}
+} */

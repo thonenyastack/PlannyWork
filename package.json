@@ -11,7 +11,7 @@
     "server": "node server --ignore client",
     "start": "node server.js",
     "client": "npm run dev --prefix client",
-    "parallel": "concurrently --kill-others-on-fail \" npm run server\" \" npm run client \" "
+    "concurrent": "concurrently --kill-others-on-fail \" npm run server\" \" npm run client \" "
   },
   "keywords": [],
   "author": "",

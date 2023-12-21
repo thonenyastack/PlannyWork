@@ -10,7 +10,6 @@ import SearchContainer from "./SearchContainer";
 import StatsItem from "./StatsItem";
 import StatsContainer from "./StatsContainer";
 import Loading from "./Loading";
-import ChartsContainer from "./ChartsContainer";
 
 export {
   Logo,
@@ -25,5 +24,4 @@ export {
   StatsItem,
   StatsContainer,
   Loading,
-  ChartsContainer,
 };

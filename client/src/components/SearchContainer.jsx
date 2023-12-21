@@ -3,7 +3,7 @@ import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/SearchContainer";
 import { useState, useMemo } from "react";
 
-// TODO: Implement Optimized Search Features.
+// Todo: Implement Optimized Search Features.
 
 const SearchContainer = () => {
   const [localSearch, setLocalSearch] = useState("");
@@ -32,7 +32,7 @@ const SearchContainer = () => {
   const debounce = () => {
     let timeoutID;
 
-    return (e) => {
+    return function (e) {
       setLocalSearch(e.target.value);
       clearTimeout(timeoutID);
       timeoutID = setTimeout(() => {
@@ -40,7 +40,9 @@ const SearchContainer = () => {
       }, 1000);
     };
   };
-
+  // Todo: Refactor debounce function
+  // Todo: Try pass search value into useMemo dep array
+  // Todo: if does not work, refactor debounce into custom hooks like useDebounce
   const cachedSearch = useMemo(() => debounce(), []);
   return (
     <Wrapper>

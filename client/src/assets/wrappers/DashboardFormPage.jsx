@@ -6,6 +6,16 @@ const Wrapper = styled.section`
   background: var(--white);
   padding: 3rem 2rem 4rem;
   box-shadow: var(--shadow-2);
+  input {
+    border: 2px #d1d5db solid;
+  }
+  input[type="file"] {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 0.3rem;
+    font-size: 1rem;
+    // line-height: 1.5rem;
+  }
   h3 {
     margin-top: 0;
   }

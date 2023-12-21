@@ -22,13 +22,6 @@ const StatsContainer = () => {
       color: "#647acb",
       bcg: "#e0e8f9",
     },
-    // {
-    //   title: "Job Declined",
-    //   count: stats.declined || 0,
-    //   icon: <FaBug />,
-    //   color: "#d66a6a",
-    //   bcg: "#ffeeee",
-    // },
   ];
   return (
     <Wrapper>
