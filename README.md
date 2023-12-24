@@ -30,13 +30,15 @@ username/password show as below.
 
 ![Overview](https://raw.githubusercontent.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/overviewnew.png)
 
-<img src="https://cdn.rawgit.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/overviewnew.png" alt="Overview Page" alt="Overview">
+![All Jobs](https://raw.githubusercontent.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/alljobsheetsnew.png)
 
-<img src="https://cdn.rawgit.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/alljobsheetsnew.png" alt="All Jobs Page" title="AllJobSheet"
+![Create Job](https://raw.githubusercontent.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/createjob.png)
+
+<!-- <img src="https://cdn.rawgit.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/alljobsheetsnew.png" alt="All Jobs Page" title="AllJobSheet"
 style="display: inline-block; margin:0 auto; padding=20px; max-width: 640px;">
 
 <img src="https://cdn.rawgit.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/createjob.png" alt="All Jobs Page" title="Ceate Jobsheet"
-style="display: inline-block; margin:0 auto; padding=20px; max-width: 640px;">
+style="display: inline-block; margin:0 auto; padding=20px; max-width: 640px;"> -->
 
 ## Technologies Backend
 
