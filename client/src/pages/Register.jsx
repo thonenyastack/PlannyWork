@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
-// import Logo from "../components/Logo";
-import { Logo, FormRow, Alert } from "../components/ComponentIndex";
+import { FormRow, Alert } from "../components/ComponentIndex";
+import logo from "../assets/images/logo.svg";
 import Wrapper from "../assets/wrappers/RegisterPage";
+import { useState, useEffect } from "react";
 import { useAppContext } from "../context/appContext";
 import { useNavigate } from "react-router-dom";
-// import { LOGIN_USER_BEGIN } from "../context/actions";
 
 const initialState = {
   name: "",
@@ -18,14 +17,11 @@ const Register = () => {
   const navigate = useNavigate();
   const { user, isLoading, showAlert, displayAlert, registerUser, loginUser } =
     useAppContext();
-  // const state = useAppContext();
-  // console.log(state);
   const toggleMember = () => {
     setFormValue({ ...regFormValue, isMember: !regFormValue.isMember });
   };
   const handleChange = (e) => {
     setFormValue({ ...regFormValue, [e.target.name]: e.target.value });
-    // console.log(regFormValue);
   };
   const onSubmit = (e) => {
     e.preventDefault();
@@ -40,7 +36,6 @@ const Register = () => {
     } else {
       registerUser(currentUser);
     }
-    // console.log(regFormValue);
   };
 
   useEffect(() => {
@@ -54,7 +49,7 @@ const Register = () => {
   return (
     <Wrapper className="full-page">
       <form className="form" onSubmit={onSubmit}>
-        <Logo />
+        <img src={logo} alt="PlannyWork" className="logo" />
         <h3>{regFormValue.isMember ? "Login" : "Register"}</h3>
         {showAlert && <Alert />}
         {!regFormValue.isMember && (

@@ -13,7 +13,7 @@ const SharedLayout = () => {
       <main className="dashboard">
         <MobileSideBar />
         <StandardSideBar />
-        <div>
+        <div className="main-content">
           <Navbar />
           <div className="dashboard-page">
             {/* Outlet:Placeholder enable Protected Route to render its children routes */}
@@ -21,6 +21,7 @@ const SharedLayout = () => {
           </div>
         </div>
       </main>
+      <footer> &copy; 2022 Yan_Naing-Dev </footer>
     </Wrapper>
   );
 };

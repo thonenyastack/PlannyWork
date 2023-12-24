@@ -12,23 +12,18 @@ const StatsContainer = () => {
       title: "Completed JobSheet",
       count: stats.completed || 0,
       icon: <FaSuitcaseRolling />,
-      color: "#e9b949",
-      bcg: "#fcefc7",
+      color2: "#fde8cd",
+      color1: "#FBD88E",
+      bcg: "#F7AF63",
     },
     {
       title: "Ongoing Jobsheet",
       count: stats.ongoing || 0,
       icon: <FaCalendarCheck />,
-      color: "#647acb",
-      bcg: "#e0e8f9",
+      color1: "#649BF6",
+      color2: "#29559b",
+      bcg: "#1e61cc",
     },
-    // {
-    //   title: "Job Declined",
-    //   count: stats.declined || 0,
-    //   icon: <FaBug />,
-    //   color: "#d66a6a",
-    //   bcg: "#ffeeee",
-    // },
   ];
   return (
     <Wrapper>

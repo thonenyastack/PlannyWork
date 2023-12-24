@@ -1,8 +1,8 @@
 import Wrapper from "../assets/wrappers/Navbar";
+import logo from "../assets/images/logo.svg";
 import { FaAlignLeft, FaUserCircle, FaCaretDown, FaUser } from "react-icons/fa";
 import { useAppContext } from "../context/appContext";
 import { useState } from "react";
-import Logo from "./Logo";
 
 const Navbar = () => {
   const { user, toggleSideBar, logoutUser } = useAppContext();
@@ -15,7 +15,7 @@ const Navbar = () => {
         </button>
 
         <div>
-          <Logo />
+          <img src={logo} alt="PlannyWork" className="logo" />
           <h3 className="logo-text">dashboard</h3>
         </div>
         <div className="btn-container">

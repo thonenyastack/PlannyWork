@@ -1,15 +1,15 @@
 import { FormRow, FormRowSelect } from "./ComponentIndex";
 import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/SearchContainer";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 
-// TODO: Implement Optimized Search Features.
+// Todo: Implement Optimized Search Features.
 
 const SearchContainer = () => {
   const [localSearch, setLocalSearch] = useState("");
+  const foucsRef = useRef(null);
   const {
     isLoading,
-    search,
     searchStatus,
     searchType,
     sort,
@@ -19,6 +19,10 @@ const SearchContainer = () => {
     handleChange,
     resetFilters,
   } = useAppContext();
+
+  useEffect(() => {
+    foucsRef.current.focus();
+  }, []);
   const handleSearch = (e) => {
     // if (isLoading) return;
     handleChange({ name: e.target.name, value: e.target.value });
@@ -32,7 +36,7 @@ const SearchContainer = () => {
   const debounce = () => {
     let timeoutID;
 
-    return (e) => {
+    return function (e) {
       setLocalSearch(e.target.value);
       clearTimeout(timeoutID);
       timeoutID = setTimeout(() => {
@@ -40,7 +44,9 @@ const SearchContainer = () => {
       }, 1000);
     };
   };
-
+  // Todo: Refactor debounce function
+  // Todo: Try pass search value into useMemo dep array
+  // Todo: if does not work, refactor debounce into custom hooks like useDebounce
   const cachedSearch = useMemo(() => debounce(), []);
   return (
     <Wrapper>
@@ -52,6 +58,7 @@ const SearchContainer = () => {
             name="search"
             value={localSearch}
             handleChange={cachedSearch}
+            ref={foucsRef}
           />
 
           <FormRowSelect
@@ -75,14 +82,6 @@ const SearchContainer = () => {
             handleChange={handleSearch}
             list={sortOptions}
           />
-
-          {/* <FormRowSelect
-            labelText="jobtype"
-            name="searchType"
-            value={searchType}
-            handleChange={handleSearch}
-            list={jobTypesOptions}
-          /> */}
           <button
             className="btn btn-block btn-danger"
             disabled={isLoading}

@@ -2,6 +2,8 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import Job from "../Job";
+import { useContext } from "react";
+import { AppProvider, useAppContext } from "../../context/appContext";
 
 const jobOne = {
   _id: "642580b94e1bc8a2164ce0d3",
@@ -36,6 +38,8 @@ const jobTwo = {
 };
 
 const jobs = [jobOne, jobTwo];
+
+const TestJobProvider = () => {};
 
 describe("Job", () => {
   it("render all job properties", () => {

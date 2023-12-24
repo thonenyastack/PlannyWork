@@ -18,7 +18,7 @@ const UserInfo = ({ _id, name, email }) => (
       </div>
     </div>
     <footer>
-      <Link to="/all-jobs" className="btn job-details">
+      <Link to="/user-job" state={{ id: _id }} className="btn job-details">
         View Job Details
       </Link>
     </footer>

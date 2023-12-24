@@ -1,4 +1,4 @@
-// import React from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
 
 import { AppProvider } from "./context/appContext";
@@ -12,6 +12,7 @@ import {
   AddJob,
   AllUsers,
 } from "./pages/dashboard/DashboardIndex";
+import UserJob from "./components/UserJob";
 
 const App = () => {
   return (
@@ -19,9 +20,9 @@ const App = () => {
       <BrowserRouter>
         <AppProvider>
           <Routes>
-            {/* Create Nested Route: Wrap all the dashboard routes inside Nested Protected route */}
+            {/* Create Nested Route: Wrap all the dashboard route components inside Nested Protected route */}
             {/* Set Root "/" path as Protected at where validate user login.
-         No logged in will be redireted to /register route */}
+         Non logged-in user will be redireted to /register route */}
             <Route
               path="/"
               element={
@@ -32,10 +33,11 @@ const App = () => {
             >
               {/* index prop Set Stats page as default display page */}
               <Route index element={<Stats />} />
-              <Route path="all-jobs" element={<AllJobs />} />
-              <Route path="add-job" element={<AddJob />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="all-users" element={<AllUsers />} />
+              <Route path="/all-jobs" element={<AllJobs />} />
+              <Route path="/add-job" element={<AddJob />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/all-users" element={<AllUsers />} />
+              <Route path="/user-job" element={<UserJob />} />
             </Route>
             <Route path="/register" element={<Register />} />
             <Route path="/landing" element={<Landing />} />
@@ -49,26 +51,9 @@ const App = () => {
 
 const container = document.getElementById("root");
 const root = createRoot(container);
-// root.render(React.createElement(App));
-root.render(<App />);
 
-// const App = () => {
-//   return React.createElement("div", {}, [
-//     React.createElement("h1", {}, "Hire ME"),
-//     React.createElement(Candidate, {
-//       name: "Jack",
-//       title: "Software Engineer",
-//       language: "Python",
-//     }),
-//     React.createElement(Candidate, {
-//       name: "Jason",
-//       title: "Software Developer",
-//       language: "Javascript",
-//     }),
-//     React.createElement(Candidate, {
-//       name: "Hugh",
-//       title: "Software Engineer",
-//       language: "C++",
-//     }),
-//   ]);
-// };
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);

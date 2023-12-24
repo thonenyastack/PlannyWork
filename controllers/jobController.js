@@ -33,6 +33,18 @@ const createJob = async (req, res, next) => {
   }
 };
 
+const getUserJobs = async (req, res) => {
+  const { id: userId } = req.params;
+  // const queryObject = {
+  //   createdBy: req.params,
+  // };
+  const jobs = await Job.find({ createdBy: "647c754b064a8ea857fe03c4" });
+  if (!jobs) {
+    throw new NotFoundError("No Job Found");
+  }
+  res.status(StatusCodes.OK).json({ jobs });
+};
+
 const getAllJobs = async (req, res) => {
   const { status, jobType, sort, search, page } = req.query;
   let queryLimit = 10;
@@ -43,25 +55,16 @@ const getAllJobs = async (req, res) => {
   const queryObject = {
     createdBy: req.user.userId,
   };
-
   if (status && status !== "all") {
     queryObject.status = status;
   }
-
   if (jobType && jobType !== "all") {
     queryObject.jobType = jobType;
   }
-
   if (search) {
     queryObject.company = { $regex: search, $options: "i" };
-    // queryObject.company = { $regex: /ABC/i };
-    // queryObject.company = search;
-    // Job.find({ company: { $regex: /A/i } });
   }
-  // console.log(`query object is ${queryObject}`);
-  // console.log(queryObject);
   let result = Job.find(queryObject);
-
   const totalJobs = await Job.countDocuments(queryObject);
   const numOfPages = Math.ceil(totalJobs / queryLimit);
 
@@ -77,12 +80,9 @@ const getAllJobs = async (req, res) => {
   if (sort === "z-a") {
     result = result.sort("-position");
   }
-
   skipQuery = (pageNum - 1) * 10;
-
   result = result.skip(skipQuery).limit(queryLimit);
   const jobs = await result;
-
   res.status(StatusCodes.OK).json({ jobs, totalJobs, numOfPages });
 };
 
@@ -93,7 +93,7 @@ const showStats = async (req, res) => {
   ]);
 
   // Array Reduce function: acc is callback funcion which does combine and process all the iterated value and return
-  // desctructure value from curr _id alias as title, count no change.curr value hold value in the array as iterated.
+  // desctructure value from curr _id set alias as title, count has no alias.curr value hold value in the array as iterated.
   // {} to return as JSON.
   stats = stats.reduce((acc, curr) => {
     const { _id: title, count } = curr;
@@ -174,20 +174,14 @@ const updateJob = async (req, res) => {
   if (!job) {
     throw new NotFoundError("No Job Found");
   }
-
-  // console.log(typeof req.user.userId);
-  // console.log(req.user.userId);
-  // console.log(typeof job.createdBy);
-  // console.log(job.createdBy);
-
+  // to check requested user id against job actual owner id
   checkAuthorization(req.user, job.createdBy);
 
   const updatedJob = await Job.findOneAndUpdate({ _id: jobID }, req.body, {
     new: true,
     runValidators: true,
   });
-
   res.status(StatusCodes.OK).json({ updatedJob });
 };
 
-export { createJob, getAllJobs, showStats, deleteJob, updateJob };
+export { createJob, getUserJobs, getAllJobs, showStats, deleteJob, updateJob };

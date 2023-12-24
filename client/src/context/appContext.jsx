@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from "react";
+import React, { useReducer, useContext, useEffect } from "react";
 
 import AppReducer from "./reducer";
 import axios from "axios";
@@ -36,23 +36,28 @@ import {
   HANDLE_FILE,
   FILE_UPLOAD_STATUS,
   FILE_UPLOAD_ERROR,
+  GET_USER_JOBS_BEGIN,
+  GET_USER_JOBS_ERROR,
+  GET_USER_JOBS_SUCCESS,
+  GET_CURRENT_USER_BEGIN,
+  GET_CURRENT_USER_SUCCESS,
 } from "./actions";
 
-const token = localStorage.getItem("token");
-const user = localStorage.getItem("user");
-const location = localStorage.getItem("location");
+// const token = localStorage.getItem("token");
+// const user = localStorage.getItem("user");
+// const location = localStorage.getItem("location");
 
 const initialState = {
+  userLoading: true,
   isLoading: false,
   showAlert: false,
   alertText: "",
   alertType: "",
-  user: user ? JSON.parse(user) : null,
-  token: token,
+  user: null,
   jobSheetNo: "",
   jobName: "",
-  location: location || "Yangon",
-  jobLocation: location || "Yangon",
+  location: "",
+  jobLocation: "",
   isEditing: false,
   showSideBar: false,
   editJobId: "",
@@ -61,13 +66,16 @@ const initialState = {
   jobTypeOptions: ["remote", "on-site", "ad-hoc"],
   statusOptions: ["ongoing", "completed"],
   status: "ongoing",
-  startOptions: ["9:00", "9:30"],
+  startOptions: ["9:00", "9:30", "10:00", "10:30", "11:00"],
   start: "9:00",
-  endOptions: ["9:30", "10:00", "10:30"],
+  endOptions: ["9:30", "10:00", "10:30", "11:00", "11:30", "12:00"],
   end: "10:00",
   duration: "",
+  jobDescription: "",
   jobs: [],
   users: [],
+  userJobs: [],
+  role: null,
   totalJobs: 0,
   numOfPages: 1,
   page: 1,
@@ -94,18 +102,18 @@ const AppProvider = ({ children }) => {
   });
 
   /*  */
-  authFetch.interceptors.request.use(
-    (config) => {
-      // config.defaults.headers.common["Authorization"] = `Bearer ${state.token}`;
-      config.headers["Authorization"] = `Bearer ${state.token}`;
-      // console.log(config);
-      return config;
-    },
-    (error) => {
-      console.log(error);
-      return Promise.reject(error);
-    }
-  );
+  // authFetch.interceptors.request.use(
+  //   (config) => {
+  //     // config.defaults.headers.common["Authorization"] = `Bearer ${state.token}`;
+  //     config.headers["Authorization"] = `Bearer ${state.token}`;
+  //     // console.log(config);
+  //     return config;
+  //   },
+  //   (error) => {
+  //     console.log(error);
+  //     return Promise.reject(error);
+  //   }
+  // );
 
   authFetch.interceptors.response.use(
     (response) => {
@@ -137,33 +145,33 @@ const AppProvider = ({ children }) => {
   };
 
   // Todo: Save user role in local storage
-  const saveLocal = ({ token, user, location, role }) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("location", location);
-    localStorage.setItem("role", role);
-  };
+  // const saveLocal = ({ token, user, location, role }) => {
+  //   localStorage.setItem("token", token);
+  //   localStorage.setItem("user", JSON.stringify(user));
+  //   localStorage.setItem("location", location);
+  //   localStorage.setItem("role", role);
+  // };
 
   // Todo: Remove user role from local storage
-  const removeLocal = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("location");
-    localStorage.removeItem("role");
-  };
+  // const removeLocal = () => {
+  //   localStorage.removeItem("token");
+  //   localStorage.removeItem("user");
+  //   localStorage.removeItem("location");
+  //   localStorage.removeItem("role");
+  // };
 
   const registerUser = async (currentUser) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
       const response = await axios.post("/api/v1/auth/register", currentUser);
       // console.log(response);
-      const { user, token, location } = response.data;
+      const { user, location } = response.data;
       dispatch({
         type: REGISTER_USER_SUCCESS,
-        payload: { token, user, location },
+        payload: { user, location },
       });
       // Todo: save in local storage later
-      saveLocal({ token, user, location });
+      // saveLocal({ token, user, location });
     } catch (error) {
       // console.log(error.response);
       dispatch({
@@ -180,14 +188,14 @@ const AppProvider = ({ children }) => {
     try {
       const { data } = await axios.post("/api/v1/auth/login", currentUser);
       // console.log(data);
-      const { user, token, location, role } = data;
+      const { user, location, role } = data;
       // console.log(location);
       dispatch({
         type: LOGIN_USER_SUCCESS,
-        payload: { user, token, location, role },
+        payload: { user, location, role },
       });
       // Todo: save in local storage later
-      saveLocal({ token, user, location, role });
+      // saveLocal({ token, user, location, role });
       // addUserToLocalStorage({ user, token, location });
     } catch (error) {
       // console.log(error.response);
@@ -199,9 +207,28 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const getCurrentUser = async () => {
+    dispatch({ type: GET_CURRENT_USER_BEGIN });
+    try {
+      const { data } = await authFetch.get("/auth/getCurrentUser");
+      const { user, role, location } = data;
+      dispatch({
+        type: GET_CURRENT_USER_SUCCESS,
+        payload: { user, role, location },
+      });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      logoutUser();
+    }
+  };
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
-    removeLocal();
+    // removeLocal();
   };
 
   // Todo: Implement updating state for user in Reducer
@@ -229,6 +256,23 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       dispatch({ type: GET_USERS_ERROR });
       console.log(error.response);
+    }
+  };
+
+  const getUserJobs = async (userId) => {
+    dispatch({ type: GET_USER_JOBS_BEGIN });
+    try {
+      const { data } = await authFetch.get(`/jobs/${userId}`);
+      const { jobs } = data;
+      console.log(data);
+      dispatch({
+        type: GET_USER_JOBS_SUCCESS,
+        payload: {
+          jobs,
+        },
+      });
+    } catch (error) {
+      dispatch({ type: GET_USER_JOBS_ERROR });
     }
   };
 
@@ -432,6 +476,7 @@ const AppProvider = ({ children }) => {
         showStats,
         resetFilters,
         getUsers,
+        getUserJobs,
         changePage,
         authFetch,
         handleFile,

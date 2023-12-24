@@ -1,5 +1,3 @@
-import FormRow from "./FormRow";
-
 const FormRowSelect = ({ labelText, name, value, handleChange, list }) => {
   return (
     <div className="form-row">

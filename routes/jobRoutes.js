@@ -7,6 +7,7 @@ import {
   createJob,
   deleteJob,
   getAllJobs,
+  getUserJobs,
   updateJob,
   showStats,
 } from "../controllers/jobController.js";
@@ -46,9 +47,11 @@ const fileFilter = (req, file, cb) => {
 
 router.route("/").post(upload.single("attachedFile"), createJob);
 // router.post("/",upload.single("attachedFile"), createJob);
-router.get("/", getAllJobs);
-// router.route("/").post(createJob).get(getAllJobs);
+// refactor into main and sub-path for sending user jobs and supervisor job
 router.route("/stats").get(showStats);
+router.route("/").get(getAllJobs);
+router.route("/:id").get(getUserJobs);
+// router.route("/").post(createJob).get(getAllJobs);
 router.route("/:id").delete(deleteJob).patch(updateJob);
 
 export default router;

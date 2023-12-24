@@ -1,10 +1,15 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const Wrapper = styled.article`
   padding: 2rem;
   background: var(--white);
   border-radius: var(--borderRadius);
-  border-bottom: 5px solid ${(props) => props.color};
+  border-bottom: 5px solid ${(props) => props.bcg};
+  background-image: linear-gradient(
+    to right,
+    ${(props) => props.color1},
+    ${(props) => props.color2}
+  );
   header {
     display: flex;
     align-items: center;
@@ -14,9 +19,11 @@ const Wrapper = styled.article`
     display: block;
     font-weight: 700;
     font-size: 50px;
-    color: ${(props) => props.color};
+    color: white;
   }
   .title {
+    font-weight: 600;
+    font-size: 1.4rem;
     margin: 0;
     text-transform: capitalize;
     letter-spacing: var(--letterSpacing);
@@ -36,6 +43,6 @@ const Wrapper = styled.article`
       color: ${(props) => props.color};
     }
   }
-`
+`;
 
-export default Wrapper
+export default Wrapper;

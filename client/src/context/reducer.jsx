@@ -30,6 +30,11 @@ import {
   HANDLE_FILE,
   FILE_UPLOAD_STATUS,
   FILE_UPLOAD_ERROR,
+  GET_USER_JOBS_BEGIN,
+  GET_USER_JOBS_SUCCESS,
+  GET_USER_JOBS_ERROR,
+  GET_CURRENT_USER_BEGIN,
+  GET_CURRENT_USER_SUCCESS,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -59,7 +64,6 @@ const AppReducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      token: action.payload.token,
       user: action.payload.user,
       location: action.payload.location,
       jobLocation: action.payload.location,
@@ -87,7 +91,6 @@ const AppReducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      token: action.payload.token,
       user: action.payload.user,
       role: action.payload.role,
       location: action.payload.location,
@@ -108,20 +111,34 @@ const AppReducer = (state, action) => {
     };
   }
 
-  if (action.type === TOGGLE_SIDEBAR) {
+  if (action.type === GET_CURRENT_USER_BEGIN) {
     return {
       ...state,
-      showSideBar: !state.showSideBar,
+      userLoading: true,
+      showAlert: false,
     };
   }
-
+  if (action.type === GET_CURRENT_USER_SUCCESS) {
+    return {
+      ...state,
+      userLoading: false,
+      user: action.payload.user,
+      role: action.payload.role,
+      location: action.payload.location,
+      jobLocation: action.payload.location,
+    };
+  }
   if (action.type === LOGOUT_USER) {
     return {
       ...initialState,
       user: null,
-      token: null,
-      jobLocation: "",
-      location: "",
+      userLoading: false,
+    };
+  }
+  if (action.type === TOGGLE_SIDEBAR) {
+    return {
+      ...state,
+      showSideBar: !state.showSideBar,
     };
   }
   if (action.type === HANDLE_CHANGE) {
@@ -132,13 +149,6 @@ const AppReducer = (state, action) => {
     };
   }
   if (action.type === CLEAR_VALUES) {
-    // const initialState = {
-    //   isEditing: false,
-    //   editJobId: "",
-    //   company: "",
-    //   jobType: "",
-    //   status: "",
-    // };
     return {
       ...state,
       isEditing: false,
@@ -148,7 +158,6 @@ const AppReducer = (state, action) => {
       status: "ongoing",
       jobSheetNo: "",
       jobName: "",
-      // ...state,
     };
   }
 
@@ -198,6 +207,22 @@ const AppReducer = (state, action) => {
       ...state,
       isLoading: false,
       users: action.payload.userRoles,
+    };
+  }
+
+  if (action.type === GET_USER_JOBS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+
+  if (action.type === GET_USER_JOBS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      userJobs: action.payload.jobs,
     };
   }
 

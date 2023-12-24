@@ -1,9 +1,8 @@
-import Wrapper from "../assets/wrappers/SmallSidebar";
+import Wrapper from "../assets/wrappers/MobileSidebar";
 import { FaTimes } from "react-icons/fa";
 import { useAppContext } from "../context/appContext";
-// import { NavLink } from "react-router-dom";
-// import links from "../utils/links.js";
-import Logo from "./Logo";
+
+import logo from "../assets/images/logo.svg";
 import NavLinks from "./NavLinks";
 
 const MobileSideBar = () => {
@@ -20,7 +19,7 @@ const MobileSideBar = () => {
             <FaTimes></FaTimes>
           </button>
           <header>
-            <Logo />
+            <img src={logo} alt="PlannyWork" className="logo" />
           </header>
           <NavLinks toggleSideBar={toggleSideBar} />
         </div>
