@@ -28,6 +28,8 @@ username/password show as below.
 
 ![Landing Page](https://raw.githubusercontent.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/landingpage.png)
 
+![Overview](https://raw.githubusercontent.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/overviewnew.png)
+
 <img src="https://cdn.rawgit.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/overviewnew.png" alt="Overview Page" alt="Overview">
 
 <img src="https://cdn.rawgit.com/thonenyastack/PlannyWorkFullStackApp/develop/UI_Demo_Images/alljobsheetsnew.png" alt="All Jobs Page" title="AllJobSheet"
