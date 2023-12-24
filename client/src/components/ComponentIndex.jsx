@@ -1,7 +1,6 @@
 import Alert from "./Alert";
 import StandardSideBar from "./StandardSideBar";
 import FormRow from "./FormRow";
-import Logo from "./Logo";
 import Navbar from "./Navbar";
 import MobileSideBar from "./MobileSideBar";
 import FormRowSelect from "./FormRowSelect";
@@ -12,7 +11,6 @@ import StatsContainer from "./StatsContainer";
 import Loading from "./Loading";
 
 export {
-  Logo,
   FormRow,
   Alert,
   Navbar,

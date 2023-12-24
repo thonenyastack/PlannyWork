@@ -13,6 +13,7 @@ import "express-async-errors";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
+import cookieParser from "cookie-parser";
 
 mongoose.set("strictQuery", true);
 
@@ -36,6 +37,7 @@ if (process.env.NODE_ENV !== "production") {
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/api/v1", (req, res) => {
   // throw new Error("error");

@@ -1,15 +1,15 @@
 import { FormRow, FormRowSelect } from "./ComponentIndex";
 import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/SearchContainer";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 
 // Todo: Implement Optimized Search Features.
 
 const SearchContainer = () => {
   const [localSearch, setLocalSearch] = useState("");
+  const foucsRef = useRef(null);
   const {
     isLoading,
-    search,
     searchStatus,
     searchType,
     sort,
@@ -19,6 +19,10 @@ const SearchContainer = () => {
     handleChange,
     resetFilters,
   } = useAppContext();
+
+  useEffect(() => {
+    foucsRef.current.focus();
+  }, []);
   const handleSearch = (e) => {
     // if (isLoading) return;
     handleChange({ name: e.target.name, value: e.target.value });
@@ -54,6 +58,7 @@ const SearchContainer = () => {
             name="search"
             value={localSearch}
             handleChange={cachedSearch}
+            ref={foucsRef}
           />
 
           <FormRowSelect
@@ -77,14 +82,6 @@ const SearchContainer = () => {
             handleChange={handleSearch}
             list={sortOptions}
           />
-
-          {/* <FormRowSelect
-            labelText="jobtype"
-            name="searchType"
-            value={searchType}
-            handleChange={handleSearch}
-            list={jobTypesOptions}
-          /> */}
           <button
             className="btn btn-block btn-danger"
             disabled={isLoading}

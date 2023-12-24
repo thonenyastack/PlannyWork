@@ -1,6 +1,6 @@
 import Wrapper from "../assets/wrappers/StandardSidebar";
 import { useAppContext } from "../context/appContext";
-import Logo from "./Logo";
+import logo from "../assets/images/logo.svg";
 import NavLinks from "./NavLinks";
 
 const StandardSideBar = () => {
@@ -14,7 +14,7 @@ const StandardSideBar = () => {
       >
         <div className="content">
           <header>
-            <Logo />
+            <img src={logo} alt="PlannyWork" className="logo" />
           </header>
           <NavLinks />
         </div>

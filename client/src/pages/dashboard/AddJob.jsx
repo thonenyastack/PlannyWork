@@ -1,7 +1,7 @@
 import { FormRow, Alert, FormRowSelect } from "../../components/ComponentIndex";
 import { useAppContext } from "../../context/appContext";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const AddJob = () => {
   const {
@@ -25,14 +25,16 @@ const AddJob = () => {
     handleChange,
     clearValue,
     isLoading,
-    createJob,
     handleFile,
     authFetch,
     fileUploadStatus,
-    fileUploadError,
     jobDescription,
   } = useAppContext();
   const [files, setFiles] = useState([]);
+  const foucsRef = useRef(null);
+  useEffect(() => {
+    foucsRef.current.focus();
+  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -81,6 +83,7 @@ const AddJob = () => {
             type="text"
             name="jobSheetNo"
             value={jobSheetNo}
+            ref={foucsRef}
             handleChange={handleJobInput}
           />
 
@@ -89,14 +92,14 @@ const AddJob = () => {
             name="jobName"
             value={jobName}
             handleChange={handleJobInput}
-          ></FormRow>
+          />
           {/* Company */}
           <FormRow
             type="text"
             name="company"
             value={company}
             handleChange={handleJobInput}
-          ></FormRow>
+          />
           {/* Job Location */}
           <FormRow
             type="text"
@@ -104,7 +107,7 @@ const AddJob = () => {
             name="jobLocation"
             value={jobLocation}
             handleChange={handleJobInput}
-          ></FormRow>
+          />
           <FormRowSelect
             name="status"
             value={status}

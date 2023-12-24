@@ -4,6 +4,7 @@ import {
   BadRequestError,
   UnAuthenicatedRequest,
 } from "../errors/ErrorIndex.js";
+import responseCookie from "../utils/responseCookie.js";
 
 const register = async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -17,6 +18,8 @@ const register = async (req, res, next) => {
   try {
     const user = await User.create({ name, email, password });
     const token = user.createJWT();
+    responseCookie(res, token);
+    // token is being removed from res.status response as responseCookie does the job
     res.status(StatusCodes.CREATED).json({
       user: {
         name: user.name,
@@ -25,7 +28,7 @@ const register = async (req, res, next) => {
         location: user.location,
         role: user.role,
       },
-      token,
+      // token,
     });
   } catch (error) {
     next(error);
@@ -34,6 +37,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(req.cookies);
 
   if (!email || !password) {
     const error = new UnAuthenicatedRequest("Plese provide all fields..");
@@ -52,9 +56,11 @@ const login = async (req, res, next) => {
     if (isPasswordCorrect) {
       const token = user.createJWT();
       user.password = undefined;
+      responseCookie(res, token);
+      // token is being removed from res.status response as responseCookie does the job
       res
         .status(StatusCodes.OK)
-        .json({ user, token, location: user.location, role: user.role });
+        .json({ user, location: user.location, role: user.role });
       // if (!user) {
       //   // throw new UnAuthenicatedRequest("Invalid Credential");
       //   const error = new UnAuthenicatedRequest("Invalid Credential");
@@ -66,6 +72,13 @@ const login = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+const getCurrentUser = async (req, res, next) => {
+  const user = await User.findOne({ _id: req.user.userId });
+  res
+    .status(StatusCodes.OK)
+    .json({ user, role: user.role, location: user.location });
 };
 
 const updateUser = async (req, res, next) => {
@@ -89,6 +102,7 @@ const updateUser = async (req, res, next) => {
     // creating a new token for update user info is optional..
     // Have removed new token creation and resending token via res.status
     // const token = user.createJWT();
+    // responseCookie(res, token);
     res.status(StatusCodes.OK).json({ user, location: user.location });
     // console.log(req.user);
     // res.send("Update user");
@@ -114,4 +128,4 @@ const listUsers = async (req, res, next) => {
     next(error);
   }
 };
-export { register, login, updateUser, listUsers };
+export { register, login, updateUser, listUsers, getCurrentUser };

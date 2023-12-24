@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const Wrapper = styled.nav`
   height: var(--nav-height);
@@ -63,6 +63,9 @@ const Wrapper = styled.nav`
     cursor: pointer;
   }
   .logo-text {
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: 5px;
     display: none;
     margin: 0;
   }
@@ -80,5 +83,5 @@ const Wrapper = styled.nav`
       display: block;
     }
   }
-`
-export default Wrapper
+`;
+export default Wrapper;
